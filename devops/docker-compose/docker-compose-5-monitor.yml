@@ -1,0 +1,25 @@
+version: '3'
+services:
+  prometheus:
+    container_name: dragon-prometheus
+    image: prom/prometheus:latest
+    networks:
+      - dragon-net
+    volumes:
+      - ../config/prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    restart: on-failure
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    networks:
+      - dragon-net
+    ports:
+      - 3000:3000
+    restart: on-failure
+
+networks:
+  dragon-net:
+    external: true

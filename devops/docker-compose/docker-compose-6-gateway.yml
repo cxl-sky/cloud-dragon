@@ -1,0 +1,25 @@
+version: '3'
+services:
+  gateway:
+    container_name: dragon-gateway
+    image: 970863783/gateway:latest
+    env_file:
+      - ../env/application.env
+    networks:
+      - dragon-net
+    ports:
+      - 10082:8080
+    restart: always
+
+  auth-server:
+    container_name: dragon-auth-server
+    image: 970863783/auth-server:latest
+    env_file:
+      - ../env/application.env
+    networks:
+      - dragon-net
+    restart: always
+
+networks:
+  dragon-net:
+    external: true

@@ -1,0 +1,39 @@
+version: '3'
+services:
+  elasticsearch:
+    image: elasticsearch:7.1.1
+    container_name: dragon-elasticsearch
+    restart: always
+    env_file:
+      - ../env/elasticsearch.env
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ../data/elasticsearch/data:/usr/share/elasticsearch/data
+      - ../data/elasticsearch/logs:/usr/share/elasticsearch/logs
+      - ../config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      - dragon-net
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  kibana:
+    image: kibana:7.1.1
+    container_name: dragon-kibana
+    restart: always
+    volumes:
+      - ../data/kibana/logs:/var/logs/kibana
+      - ../config/kibana.yml:/etc/kibana/kibana.yml
+    networks:
+      - dragon-net
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+
+networks:
+  dragon-net:
+    external: true

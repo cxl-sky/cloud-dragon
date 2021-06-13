@@ -1,0 +1,20 @@
+version: '3'
+services:
+  mysql-init:
+    image: mysql:5.7
+    command: sh /init-db.sh
+    networks:
+      - dragon-net
+    volumes:
+      # ！！！谨慎操作！！！
+      # 选择未初始化的脚本执行，如果已初始化，执行后将重置数据
+
+      #- ../config/nacos/init.sql:/sql/nacos/init.sql
+#      - ../config/auth/init.sql:/sql/auth/init.sql
+      - ../config/init-db.sh:/init-db.sh
+    env_file:
+      - ../env/mysql.env
+
+networks:
+  dragon-net:
+    external: true

@@ -1,0 +1,22 @@
+server:
+  servlet:
+    context-path: /${spring.application.name}
+spring:
+  application:
+    name: auth-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${REGISTER_HOST:localhost}:${REGISTER_PORT:8848}
+        namespace: ${NAME_SPACE:da4e6fb4-6fc9-45ec-9a62-9d6076742077}
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        refresh-enabled: true
+        extension-configs:
+          - data-id: application.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
+            refresh: true
+
