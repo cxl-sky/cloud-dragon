@@ -28,6 +28,8 @@
         <fastjson.version>1.2.58</fastjson.version>
         <spring-rabbit.version>1.7.3.RELEASE</spring-rabbit.version>
         <durid.version>1.1.17</durid.version>
+        <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
+        <mybatis-plus.version>3.4.2</mybatis-plus.version>
     </properties>
 
     <dependencyManagement>
@@ -57,6 +59,16 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${durid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus-jose-jwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>

@@ -3,6 +3,7 @@ package com.dragon.authserver.service;
 import com.dragon.authserver.vo.DragonUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author chenxiaolong
@@ -31,12 +35,32 @@ public class DragonUserDetailServiceImpl implements UserDetailsService {
         if (!username.equals("admin")) {
             throw new UsernameNotFoundException("no user found");
         } else {
-            String role = "admin";
-            List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(role));
+
             String password = passwordEncoder.encode("123456");
-            return new DragonUser("1", username, password, "test", true, authorities);
+
+            return new org.springframework.security.core.userdetails.User(
+                    username,
+                    password,
+                    true,
+                    true,
+                    true,
+                    true,
+                    this.obtainGrantedAuthorities());
         }
+    }
+
+    /**
+     * 获得登录者所有角色的权限集合.
+     *
+     * @return
+     */
+    protected Set<GrantedAuthority> obtainGrantedAuthorities() {
+        String role = "admin";
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(role));
+//        Set<Role> roles = roleService.queryUserRolesByUserId(user.getId());
+//        log.info("user:{},roles:{}", user.getUsername(), roles);
+        return authorities;
     }
 
     /**
