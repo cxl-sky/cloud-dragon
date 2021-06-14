@@ -13,6 +13,8 @@ before_script:
   - echo "MAVEN_OPTS='-Xms1024m -Xmx3072m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m'" > ~/.mavenrc
 
 before_install:
+  - cd common && mvn clean install
+  - cd -
   - pip install --user codecov
 
 after_success:
