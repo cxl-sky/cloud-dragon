@@ -22,7 +22,7 @@
 
 ------------------------------
 > 目前项目处于开发阶段，部分功能已经可以使用，后续会逐步完成其他规划内容，并完善项目文档，如果你在使用过程中遇到任何问题，可以通过 QQ 群聊联系我，
-> 点击[![QQ群](https://img.shields.io/badge/QQ%E7%BE%A4-878510003-blue)](https://qm.qq.com/cgi-bin/qm/qr?k=gQw2MJysfnRTy9qKf8hWnK-xB24c__Dj&authKey=pxIxNHae0uFqcQenxT72xKQ3Isz3Xt5p9J+d2RCUPr2HaqLv+KElTKavXBPvgKsj&noverify=0)
+> [请戳这里](https://qm.qq.com/cgi-bin/qm/qr?k=gQw2MJysfnRTy9qKf8hWnK-xB24c__Dj&authKey=pxIxNHae0uFqcQenxT72xKQ3Isz3Xt5p9J+d2RCUPr2HaqLv+KElTKavXBPvgKsj&noverify=0)
 > 加入群聊。
 
 
@@ -35,7 +35,6 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 
 - [点击快速开始]()
 - [开发指南]()
-- [学习交流，加Q群](https://qm.qq.com/cgi-bin/qm/qr?k=gQw2MJysfnRTy9qKf8hWnK-xB24c__Dj&authKey=pxIxNHae0uFqcQenxT72xKQ3Isz3Xt5p9J+d2RCUPr2HaqLv+KElTKavXBPvgKsj&noverify=0)
 
 ## 主要功能及规划
 ### 1. 主要技术栈及规划：
