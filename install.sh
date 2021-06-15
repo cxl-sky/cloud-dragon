@@ -86,13 +86,13 @@ esac
 echo '==================4.3 启动 elk ========'
 docker-compose -f docker-compose-3-elk.yml up
 #按需启动
-#docker-compose -f docker-compose-3-elk.yml up -d elasticsearch
-#docker-compose -f docker-compose-3-elk.yml up -d kibana
+#docker-compose -f docker-compose-4-elk.yml up -d elasticsearch
+#docker-compose -f docker-compose-4-elk.yml up -d kibana
 
 echo '==================4.4 启动 nacos ========'
 docker-compose -f docker-compose-4-nacos.yml up
 #按需启动
-#docker-compose -f docker-compose-4-nacos.yml up -d nacos
+#docker-compose -f docker-compose-3-nacos.yml up -d nacos
 
 echo '==================4.5 启动 prometheus、grafana ========'
 docker-compose -f docker-compose-5-monitor.yml up

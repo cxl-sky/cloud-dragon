@@ -21,9 +21,7 @@
 </p>
 
 ------------------------------
-> 目前项目处于开发阶段，部分功能已经可以使用，后续会逐步完成其他规划内容，并完善项目文档，如果你在使用过程中遇到任何问题，可以通过 QQ 群聊联系我，
-> [请戳这里](https://qm.qq.com/cgi-bin/qm/qr?k=gQw2MJysfnRTy9qKf8hWnK-xB24c__Dj&authKey=pxIxNHae0uFqcQenxT72xKQ3Isz3Xt5p9J+d2RCUPr2HaqLv+KElTKavXBPvgKsj&noverify=0)
-> 加入群聊。
+> 目前项目处于开发阶段，部分功能已经可以使用，后续会逐步完成其他规划内容，并完善项目文档，如果你在使用过程中遇到任何问题，可以通过 QQ 群聊联系我，[请戳这里](https://qm.qq.com/cgi-bin/qm/qr?k=gQw2MJysfnRTy9qKf8hWnK-xB24c__Dj&authKey=pxIxNHae0uFqcQenxT72xKQ3Isz3Xt5p9J+d2RCUPr2HaqLv+KElTKavXBPvgKsj&noverify=0) 加入群聊。
 
 
 ## 📚 项目介绍
@@ -33,7 +31,7 @@ Cloud Dragon 是一套适合于企业级使用的微服务脚手架项目，可�
 
 Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方式控制令牌发放与销毁。 统一使用 Docker 部署，提供一键脚本安装，快速部署使用。支持一键快速生成前后端代码，提高开发开发效率，只需专注于业务，是一个非常适用的微服务快速开发脚手架。
 
-- [点击快速开始]()
+- [点击快速开始](./docs/quick-start.md)
 - [开发指南]()
 
 ## 主要功能及规划
