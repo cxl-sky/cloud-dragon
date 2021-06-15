@@ -9,7 +9,7 @@
     <modules>
         <module>auth-server</module>
         <module>gateway</module>
-        <module>resource-server</module>
+        <module>resource</module>
     </modules>
     <packaging>pom</packaging>
 
