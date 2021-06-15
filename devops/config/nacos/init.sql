@@ -1,7 +1,29 @@
 DROP DATABASE IF EXISTS nacos;
 CREATE DATABASE nacos DEFAULT CHARSET utf8mb4;
 USE nacos;
+/*
+ Navicat Premium Data Transfer
 
+ Source Server         : localhost-docker
+ Source Server Type    : MySQL
+ Source Server Version : 50734
+ Source Host           : localhost:3306
+ Source Schema         : nacos
+
+ Target Server Type    : MySQL
+ Target Server Version : 50734
+ File Encoding         : 65001
+
+ Date: 15/06/2021 23:10:28
+*/
+
+SET NAMES utf8mb4;
+SET
+FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for config_info
+-- ----------------------------
 DROP TABLE IF EXISTS `config_info`;
 CREATE TABLE `config_info`
 (
@@ -23,39 +45,35 @@ CREATE TABLE `config_info`
     `c_schema`     text CHARACTER SET utf8 COLLATE utf8_bin NULL,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant`(`data_id`, `group_id`, `tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Records of config_info
+-- ----------------------------
 INSERT INTO `config_info`
 VALUES (1, 'gateway', 'DEFAULT_GROUP',
-        'server:\n  port: 10081\nspring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n',
-        '10a2e75d69fda475d7bdb58e46beeb85', '2021-06-11 22:04:18', '2021-06-11 22:30:53', NULL, '172.18.0.1', '',
-        'da4e6fb4-6fc9-45ec-9a62-9d6076742077', '', '', '', 'yaml', '');
-INSERT INTO `config_info`
-VALUES (4, 'application', 'DEFAULT_GROUP',
-        'server:\n  servlet:\n    context-path: /${spring.application.name}\nspring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST:localhost}\n    port: ${REDIS_PORT:6379}\n    password: ${REDIS_PASSWORD:123456}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
-        '11796044e7be74d75e2eb5c6baec10ef', '2021-06-11 22:31:10', '2021-06-15 02:03:48', NULL, '172.18.0.1', '',
+        'server:\n  port: 10081\nspring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n  redis:\n    database: 0\n    host: localhost\n    port: 6379\n    password: \n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '4b4fa1394884bfb02d69118b2f62aa62', '2021-06-11 22:04:18', '2021-06-15 10:09:01', NULL, '172.18.0.1', '',
         'da4e6fb4-6fc9-45ec-9a62-9d6076742077', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (6, 'gateway', 'DEFAULT_GROUP',
-        'spring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n',
-        'e2a845594ac4488b62f360e3549d1c01', '2021-06-11 22:35:57', '2021-06-11 22:36:21', NULL, '172.18.0.1', '',
-        '14413489-79ed-4232-b7c6-d7e9928517cc', '', '', '', 'yaml', '');
-INSERT INTO `config_info`
-VALUES (7, 'application', 'DEFAULT_GROUP',
-        'spring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST:localhost}\n    port: ${REDIS_PORT:6379}\n    password: ${REDIS_PASSWORD:123456}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3\n',
-        'da5a6e1c007eed2dad7554a774ea4c37', '2021-06-11 22:35:57', '2021-06-15 02:05:14', NULL, '172.18.0.1', '',
+        'spring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n  redis:\n    database: 0\n    host: ${REDIS_HOST}\n    port: ${REDIS_PORT}\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        'ddb28104b37e5073d8ca6167f6f4de3e', '2021-06-11 22:35:57', '2021-06-15 10:02:53', NULL, '172.18.0.1', '',
         '14413489-79ed-4232-b7c6-d7e9928517cc', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (13, 'auth-server', 'DEFAULT_GROUP',
-        'server:\n  port: 8081\nspring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://localhost:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: root\n    password: root123',
-        '9fa599cbdd66e2f0bed3f8b04e59c98c', '2021-06-12 05:00:27', '2021-06-15 02:03:58', NULL, '172.18.0.1', '',
+        'server:\n  port: 8081\nspring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://localhost:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: root\n    password: root123\n  redis:\n    database: 0\n    host: localhost\n    port: 6379\n    password: \n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '418d45f7be8dba991c79822cedc95638', '2021-06-12 05:00:27', '2021-06-15 10:06:53', NULL, '172.18.0.1', '',
         'da4e6fb4-6fc9-45ec-9a62-9d6076742077', '', '', '', 'yaml', '');
 INSERT INTO `config_info`
 VALUES (14, 'auth-server', 'DEFAULT_GROUP',
-        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    username: root\n    password: ${MYSQL_ROOT_PASSWORD}      \n    url: jdbc:mysql://mysql:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false',
-        'd5855a9a77f89b2f77b882285378dc9c', '2021-06-12 12:38:09', '2021-06-15 02:06:25', NULL, '172.18.0.1', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: ${REDIS_HOST}\n    port: ${REDIS_PORT}\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        'bec29662dfde0c29cf0d08eef92c626d', '2021-06-12 12:38:09', '2021-06-15 09:56:34', NULL, '172.18.0.1', '',
         '14413489-79ed-4232-b7c6-d7e9928517cc', '', '', '', 'yaml', '');
 
+-- ----------------------------
+-- Table structure for config_info_aggr
+-- ----------------------------
 DROP TABLE IF EXISTS `config_info_aggr`;
 CREATE TABLE `config_info_aggr`
 (
@@ -71,6 +89,9 @@ CREATE TABLE `config_info_aggr`
     UNIQUE INDEX `uk_configinfoaggr_datagrouptenantdatum`(`data_id`, `group_id`, `tenant_id`, `datum_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'å¢žåŠ ç§Ÿæˆ·å­—æ®µ' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for config_info_beta
+-- ----------------------------
 DROP TABLE IF EXISTS `config_info_beta`;
 CREATE TABLE `config_info_beta`
 (
@@ -90,6 +111,9 @@ CREATE TABLE `config_info_beta`
     UNIQUE INDEX `uk_configinfobeta_datagrouptenant`(`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info_beta' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for config_info_tag
+-- ----------------------------
 DROP TABLE IF EXISTS `config_info_tag`;
 CREATE TABLE `config_info_tag`
 (
@@ -109,6 +133,9 @@ CREATE TABLE `config_info_tag`
     UNIQUE INDEX `uk_configinfotag_datagrouptenanttag`(`data_id`, `group_id`, `tenant_id`, `tag_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info_tag' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for config_tags_relation
+-- ----------------------------
 DROP TABLE IF EXISTS `config_tags_relation`;
 CREATE TABLE `config_tags_relation`
 (
@@ -124,6 +151,9 @@ CREATE TABLE `config_tags_relation`
     INDEX       `idx_tenant_id`(`tenant_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_tag_relation' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for group_capacity
+-- ----------------------------
 DROP TABLE IF EXISTS `group_capacity`;
 CREATE TABLE `group_capacity`
 (
@@ -141,6 +171,9 @@ CREATE TABLE `group_capacity`
     UNIQUE INDEX `uk_group_id`(`group_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'é›†ç¾¤ã€å„Groupå®¹é‡ä¿¡æ¯è¡¨' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for his_config_info
+-- ----------------------------
 DROP TABLE IF EXISTS `his_config_info`;
 CREATE TABLE `his_config_info`
 (
@@ -161,8 +194,11 @@ CREATE TABLE `his_config_info`
     INDEX          `idx_gmt_create`(`gmt_create`) USING BTREE,
     INDEX          `idx_gmt_modified`(`gmt_modified`) USING BTREE,
     INDEX          `idx_did`(`data_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'å¤šç§Ÿæˆ·æ”¹é€ ' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'å¤šç§Ÿæˆ·æ”¹é€ ' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Records of his_config_info
+-- ----------------------------
 INSERT INTO `his_config_info`
 VALUES (0, 1, 'gateway', 'DEFAULT_GROUP', '',
         'spring:\r\n  redis:\r\n    database: 0\r\n    host: ${REDIS_HOST:localhost}\r\n    port: ${REDIS_PORT:6379}\r\n    password: ${REDIS_PASSWORD:123456}\r\n    timeout: 3000\r\n    jedis:\r\n      pool:\r\n        max-active: -1\r\n        max-wait: -1\r\n        max-idle: 8\r\n        min-idle: 3\r\n  cloud:\r\n    gateway:\r\n      routes:\r\n        - id: auth-server\r\n          uri: lb://auth-server\r\n          predicates:\r\n            - Path=/auth-server/**\r\n      default-filters:\r\n        - name: RequestRateLimiter\r\n          args:\r\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\r\n            redis-rate-limiter.replenishRate: 1\r\n            redis-rate-limiter.burstCapacity: 5\r\n',
@@ -338,7 +374,220 @@ VALUES (14, 35, 'auth-server', 'DEFAULT_GROUP', '',
         'spring:\n  datasource:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    username: root\n    password: ${MYSQL_ROOT_PASSWORD}      \n    url: jdbc:mysql://mysql:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false',
         '999056ea1541ca737ac1e363ff16b6ae', '2021-06-15 15:06:25', '2021-06-15 02:06:25', NULL, '172.18.0.1', 'U',
         '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (7, 36, 'application', 'DEFAULT_GROUP', '',
+        'spring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST:localhost}\n    port: ${REDIS_PORT:6379}\n    password: ${REDIS_PASSWORD:123456}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3\n',
+        'da5a6e1c007eed2dad7554a774ea4c37', '2021-06-15 17:18:34', '2021-06-15 04:18:35', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 37, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    username: root\n    password: ${MYSQL_ROOT_PASSWORD}      \n    url: jdbc:mysql://mysql:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false',
+        'd5855a9a77f89b2f77b882285378dc9c', '2021-06-15 17:21:57', '2021-06-15 04:21:57', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (7, 38, 'application', 'DEFAULT_GROUP', '',
+        'spring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST:localhost}\n    port: ${REDIS_PORT:6379}\n    password: ${REDIS_PASSWORD:123456}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3\n',
+        'da5a6e1c007eed2dad7554a774ea4c37', '2021-06-15 17:22:17', '2021-06-15 04:22:17', NULL, '172.18.0.1', 'D',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 39, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST:localhost}\n    port: ${REDIS_PORT:6379}\n    password: ${REDIS_PASSWORD:123456}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    username: root\n    password: ${MYSQL_ROOT_PASSWORD}      \n    url: jdbc:mysql://mysql:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false',
+        '1fd35824f2a1c9b9187e3553ec838043', '2021-06-15 17:27:55', '2021-06-15 04:27:55', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (6, 40, 'gateway', 'DEFAULT_GROUP', '',
+        'spring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n',
+        'e2a845594ac4488b62f360e3549d1c01', '2021-06-15 19:58:08', '2021-06-15 06:58:08', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (0, 41, 'application', 'DEFAULT_GROUP', '',
+        'server:\n  servlet:\n    context-path: /${spring.application.name}\nspring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST:localhost}\n    port: ${REDIS_PORT:6379}\n    password: ${REDIS_PASSWORD:123456}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '11796044e7be74d75e2eb5c6baec10ef', '2021-06-15 19:58:08', '2021-06-15 06:58:08', NULL, '172.18.0.1', 'I',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 42, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST}\n    port: ${REDIS_PORT}\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    username: root\n    password: ${MYSQL_ROOT_PASSWORD}      \n    url: jdbc:mysql://mysql:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false',
+        '1fd0a9f2b25975a9cfc6d8291f3a990c', '2021-06-15 19:58:08', '2021-06-15 06:58:08', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (6, 43, 'gateway', 'DEFAULT_GROUP', '',
+        'server:\n  port: 10081\nspring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n',
+        '10a2e75d69fda475d7bdb58e46beeb85', '2021-06-15 20:00:56', '2021-06-15 07:00:56', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 44, 'auth-server', 'DEFAULT_GROUP', '',
+        'server:\n  port: 8081\nspring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://localhost:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: root\n    password: root123',
+        '9fa599cbdd66e2f0bed3f8b04e59c98c', '2021-06-15 20:03:30', '2021-06-15 07:03:30', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (16, 45, 'application', 'DEFAULT_GROUP', '',
+        'server:\n  servlet:\n    context-path: /${spring.application.name}\nspring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST:localhost}\n    port: ${REDIS_PORT:6379}\n    password: ${REDIS_PASSWORD:123456}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '11796044e7be74d75e2eb5c6baec10ef', '2021-06-15 20:04:24', '2021-06-15 07:04:25', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 46, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_PASSWORD}\n    password: ${MYSQL_USERNAME}',
+        '607a7d614213129cbf7d1107be972804', '2021-06-15 20:15:39', '2021-06-15 07:15:40', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 47, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://mysql:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_PASSWORD}\n    password: ${MYSQL_USERNAME}',
+        '753f38a29a1f20c2a4549d41f45678a5', '2021-06-15 20:17:53', '2021-06-15 07:17:54', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 48, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:{MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}',
+        '687759bfc0067dddebeea17ea92f6371', '2021-06-15 20:20:32', '2021-06-15 07:20:33', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 49, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}',
+        'c376105d264676e37d7fdbba4664a962', '2021-06-15 20:23:23', '2021-06-15 07:23:24', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 50, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n redis:\n    database: 0\n    host: ${REDIS_HOST}\n    port: ${REDIS_PORT}\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '5f6f90beea046adb782513a95746a779', '2021-06-15 20:23:31', '2021-06-15 07:23:32', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 51, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: ${REDIS_HOST}\n    port: ${REDIS_PORT}\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        'bec29662dfde0c29cf0d08eef92c626d', '2021-06-15 20:26:53', '2021-06-15 07:26:53', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (16, 52, 'application', 'DEFAULT_GROUP', '',
+        'spring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST}\n    port: ${REDIS_PORT}\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '23cd3d01fd0fc8eff5df557b4ba365c0', '2021-06-15 20:28:33', '2021-06-15 07:28:33', NULL, '172.18.0.1', 'D',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 53, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: redis\n    port: 6379\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '3ff5e2d981c8c4b6b41ed540a8231969', '2021-06-15 20:30:49', '2021-06-15 07:30:50', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 54, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: redis\n    port: 6379\n    password: 123456\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        'bde934623cd0f51fe0eebd012d6460a7', '2021-06-15 21:43:27', '2021-06-15 08:43:27', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (6, 55, 'gateway', 'DEFAULT_GROUP', '',
+        'spring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n',
+        'e2a845594ac4488b62f360e3549d1c01', '2021-06-15 21:56:41', '2021-06-15 08:56:41', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (0, 56, 'application', 'DEFAULT_GROUP', '',
+        'server:\n  servlet:\n    context-path: /${spring.application.name}\nspring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST:localhost}\n    port: ${REDIS_PORT:6379}\n    password: ${REDIS_PASSWORD:123456}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '11796044e7be74d75e2eb5c6baec10ef', '2021-06-15 21:56:41', '2021-06-15 08:56:41', NULL, '172.18.0.1', 'I',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 57, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: redis\n    port: 6379\n    password: \n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '787484ecdde66df99b596542c46c4a8c', '2021-06-15 21:56:41', '2021-06-15 08:56:41', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (6, 58, 'gateway', 'DEFAULT_GROUP', '',
+        'server:\n  port: 10081\nspring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n',
+        '10a2e75d69fda475d7bdb58e46beeb85', '2021-06-15 21:56:53', '2021-06-15 08:56:53', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 59, 'auth-server', 'DEFAULT_GROUP', '',
+        'server:\n  port: 8081\nspring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://localhost:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: root\n    password: root123',
+        '9fa599cbdd66e2f0bed3f8b04e59c98c', '2021-06-15 21:58:08', '2021-06-15 08:58:09', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (17, 60, 'application', 'DEFAULT_GROUP', '',
+        'server:\n  servlet:\n    context-path: /${spring.application.name}\nspring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST:localhost}\n    port: ${REDIS_PORT:6379}\n    password: ${REDIS_PASSWORD:123456}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '11796044e7be74d75e2eb5c6baec10ef', '2021-06-15 21:58:40', '2021-06-15 08:58:41', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 61, 'auth-server', 'DEFAULT_GROUP', '',
+        'server:\n  port: 8081\nspring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:{MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}',
+        '9e319318b32638340014829b8c70fea0', '2021-06-15 21:58:57', '2021-06-15 08:58:57', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 62, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:{MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}',
+        '687759bfc0067dddebeea17ea92f6371', '2021-06-15 22:09:56', '2021-06-15 09:09:56', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (17, 63, 'application', 'DEFAULT_GROUP', '',
+        'spring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST}\n    port: ${REDIS_PORT}\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '23cd3d01fd0fc8eff5df557b4ba365c0', '2021-06-15 22:12:08', '2021-06-15 09:12:09', NULL, '172.18.0.1', 'D',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 64, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}',
+        'c376105d264676e37d7fdbba4664a962', '2021-06-15 22:12:21', '2021-06-15 09:12:21', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 65, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: ${REDIS_HOST}\n    port: ${REDIS_PORT}\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        'bec29662dfde0c29cf0d08eef92c626d', '2021-06-15 22:16:59', '2021-06-15 09:17:00', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 66, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: redis\n    port: ${REDIS_PORT}\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '358f86b99cfbf74242597fbdd58adba5', '2021-06-15 22:21:14', '2021-06-15 09:21:14', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 67, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: redis\n    port: ${REDIS_PORT}\n    password: \n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        'f4e5e1eb3569593d3183e7d690439fb8', '2021-06-15 22:46:43', '2021-06-15 09:46:44', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 68, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: redis\n    port: ${REDIS_PORT}\n    password: ${REDIS_PASSWORD}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '358f86b99cfbf74242597fbdd58adba5', '2021-06-15 22:48:13', '2021-06-15 09:48:14', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 69, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: redis\n    port: ${REDIS_PORT}\n    password: 123456\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '7949b9010e2354ab3138bfcc7f2f8081', '2021-06-15 22:49:41', '2021-06-15 09:49:41', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 70, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: redis\n    port: ${REDIS_PORT}\n    password: \n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        'f4e5e1eb3569593d3183e7d690439fb8', '2021-06-15 22:52:10', '2021-06-15 09:52:10', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (14, 71, 'auth-server', 'DEFAULT_GROUP', '',
+        'spring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: ${MYSQL_USERNAME}\n    password: ${MYSQL_PASSWORD}\n  redis:\n    database: 0\n    host: redis\n    port: ${REDIS_PORT}\n    password: 12356\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        'fb37e24ebe7752b0361bd7c1cce3d55d', '2021-06-15 22:56:33', '2021-06-15 09:56:34', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (6, 72, 'gateway', 'DEFAULT_GROUP', '',
+        'spring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n',
+        'e2a845594ac4488b62f360e3549d1c01', '2021-06-15 23:02:53', '2021-06-15 10:02:53', NULL, '172.18.0.1', 'U',
+        '14413489-79ed-4232-b7c6-d7e9928517cc');
+INSERT INTO `his_config_info`
+VALUES (4, 73, 'application', 'DEFAULT_GROUP', '',
+        'server:\n  servlet:\n    context-path: /${spring.application.name}\nspring:\n  redis:\n    database: 0\n    host: ${REDIS_HOST:localhost}\n    port: ${REDIS_PORT:6379}\n    password: ${REDIS_PASSWORD:123456}\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '11796044e7be74d75e2eb5c6baec10ef', '2021-06-15 23:03:09', '2021-06-15 10:03:10', NULL, '172.18.0.1', 'D',
+        'da4e6fb4-6fc9-45ec-9a62-9d6076742077');
+INSERT INTO `his_config_info`
+VALUES (13, 74, 'auth-server', 'DEFAULT_GROUP', '',
+        'server:\n  port: 8081\nspring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://localhost:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: root\n    password: root123',
+        '9fa599cbdd66e2f0bed3f8b04e59c98c', '2021-06-15 23:04:16', '2021-06-15 10:04:17', NULL, '172.18.0.1', 'U',
+        'da4e6fb4-6fc9-45ec-9a62-9d6076742077');
+INSERT INTO `his_config_info`
+VALUES (1, 75, 'gateway', 'DEFAULT_GROUP', '',
+        'server:\n  port: 10081\nspring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n',
+        '10a2e75d69fda475d7bdb58e46beeb85', '2021-06-15 23:04:33', '2021-06-15 10:04:33', NULL, '172.18.0.1', 'U',
+        'da4e6fb4-6fc9-45ec-9a62-9d6076742077');
+INSERT INTO `his_config_info`
+VALUES (13, 76, 'auth-server', 'DEFAULT_GROUP', '',
+        'server:\n  port: 8081\nspring:\n  datasource:\n    driver-class-name: com.mysql.jdbc.Driver\n    url: jdbc:mysql://localhost:3306/auth_center?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useSSL=false\n    username: root\n    password: root123\n  redis:\n    database: 0\n    host: localhost\n    port: 6379\n    password: 123456\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        '24c193f3b37c4966e766c6ad157f41a0', '2021-06-15 23:06:53', '2021-06-15 10:06:53', NULL, '172.18.0.1', 'U',
+        'da4e6fb4-6fc9-45ec-9a62-9d6076742077');
+INSERT INTO `his_config_info`
+VALUES (1, 77, 'gateway', 'DEFAULT_GROUP', '',
+        'server:\n  port: 10081\nspring:\n  cloud:\n    gateway:\n      routes:\n        - id: auth-server\n          uri: lb://auth-server\n          predicates:\n            - Path=/auth-server/**\n      default-filters:\n        - name: RequestRateLimiter\n          args:\n            key-resolver: \'#{@remoteAddressKeyResolver}\'\n            redis-rate-limiter.replenishRate: 1\n            redis-rate-limiter.burstCapacity: 5\n  redis:\n    database: 0\n    host: localhost\n    port: 6379\n    password: 123456\n    timeout: 3000\n    jedis:\n      pool:\n        max-active: -1\n        max-wait: -1\n        max-idle: 8\n        min-idle: 3',
+        'b28e9684ae45fbe1645f4e20421df379', '2021-06-15 23:09:00', '2021-06-15 10:09:01', NULL, '172.18.0.1', 'U',
+        'da4e6fb4-6fc9-45ec-9a62-9d6076742077');
 
+-- ----------------------------
+-- Table structure for permissions
+-- ----------------------------
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions`
 (
@@ -348,6 +597,9 @@ CREATE TABLE `permissions`
     UNIQUE INDEX `uk_role_permission`(`role`, `resource`, `action`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for roles
+-- ----------------------------
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles`
 (
@@ -356,9 +608,15 @@ CREATE TABLE `roles`
     UNIQUE INDEX `idx_user_role`(`username`, `role`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Records of roles
+-- ----------------------------
 INSERT INTO `roles`
 VALUES ('nacos', 'ROLE_ADMIN');
 
+-- ----------------------------
+-- Table structure for tenant_capacity
+-- ----------------------------
 DROP TABLE IF EXISTS `tenant_capacity`;
 CREATE TABLE `tenant_capacity`
 (
@@ -376,6 +634,9 @@ CREATE TABLE `tenant_capacity`
     UNIQUE INDEX `uk_tenant_id`(`tenant_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'ç§Ÿæˆ·å®¹é‡ä¿¡æ¯è¡¨' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for tenant_info
+-- ----------------------------
 DROP TABLE IF EXISTS `tenant_info`;
 CREATE TABLE `tenant_info`
 (
@@ -392,11 +653,17 @@ CREATE TABLE `tenant_info`
     INDEX           `idx_tenant_id`(`tenant_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'tenant_info' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Records of tenant_info
+-- ----------------------------
 INSERT INTO `tenant_info`
 VALUES (1, '1', 'da4e6fb4-6fc9-45ec-9a62-9d6076742077', 'dev', '开发', 'nacos', 1623467017920, 1623467017920);
 INSERT INTO `tenant_info`
 VALUES (2, '1', '14413489-79ed-4232-b7c6-d7e9928517cc', 'test', '测试', 'nacos', 1623468903133, 1623468903133);
 
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`
 (
@@ -406,6 +673,11 @@ CREATE TABLE `users`
     PRIMARY KEY (`username`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Records of users
+-- ----------------------------
 INSERT INTO `users`
 VALUES ('nacos', '$2a$10$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu', 1);
 
+SET
+FOREIGN_KEY_CHECKS = 1;
