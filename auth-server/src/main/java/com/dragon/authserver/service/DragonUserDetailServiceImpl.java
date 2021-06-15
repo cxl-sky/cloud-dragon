@@ -1,11 +1,9 @@
 package com.dragon.authserver.service;
 
 import com.dragon.authserver.vo.DragonUser;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author chenxiaolong
@@ -78,7 +75,13 @@ public class DragonUserDetailServiceImpl implements UserDetailsService {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(role));
         String password = passwordEncoder.encode("123456");
-        return new DragonUser("1", mobile, password, "test", true, authorities);
-
+        return new org.springframework.security.core.userdetails.User(
+                mobile,
+                password,
+                true,
+                true,
+                true,
+                true,
+                this.obtainGrantedAuthorities());
     }
 }

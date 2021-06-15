@@ -44,8 +44,8 @@ echo '==================创建 docker 网络: =========='
 docker network create -d bridge dragon-net
 
 echo '==================4.1 显示环境变量: =========='
-echo '==================redis.env: =========='
-cat ../env/redis.env
+echo '==================redis.conf: =========='
+cat ../conf/redis.conf
 echo '==================rabbitmq.env: =========='
 cat ../env/rabbitmq.env
 echo '==================mysql.env: =========='
