@@ -17,8 +17,8 @@ import java.util.Map;
 /**
  * 自定义grant_type模式-手机号短信验证模式
  *
- * @author: yaohw
- * @create: 2019-09-29 18:29
+ * @author: chenxiaolong
+ * @date 2021年06月12日 16:55
  **/
 public class MobileCodeTokenGranter extends AbstractTokenGranter {
 

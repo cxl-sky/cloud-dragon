@@ -2,6 +2,9 @@ package com.dragon.cmn.exception;
 
 import lombok.Getter;
 
+/**
+ * @author chenxiaolong
+ */
 @Getter
 public class BaseException extends RuntimeException {
     /**

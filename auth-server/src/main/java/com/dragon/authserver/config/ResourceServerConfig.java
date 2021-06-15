@@ -13,7 +13,7 @@
 //import org.springframework.security.oauth2.provider.token.TokenStore;
 //
 ///**
-// * @author cxl
+// * @author chenxiaolong
 // */
 //@Configuration
 //@EnableResourceServer

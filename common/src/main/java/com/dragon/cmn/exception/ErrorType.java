@@ -1,5 +1,8 @@
 package com.dragon.cmn.exception;
 
+/**
+ * @author chenxiaolong
+ */
 public interface ErrorType {
     /**
      * 返回code

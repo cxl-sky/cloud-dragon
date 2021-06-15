@@ -71,7 +71,7 @@ read -r -p "确认初始化的数据库脚本了吗? [Y/n] " sqlInitConfirm
 case $sqlInitConfirm in
     [yY][eE][sS]|[yY])
 		echo "Yes 继续执行"
-		docker-compose -f docker-compose-2-init.yml up
+		docker-compose -f docker-compose-2-init-db.yml up
 		;;
     [nN][oO]|[nN])
 		echo "No 终止执行"
@@ -83,22 +83,29 @@ case $sqlInitConfirm in
 		;;
 esac
 
-echo '==================4.3 启动 elk ========'
-docker-compose -f docker-compose-3-elk.yml up
+echo '==================4.3 启动 nacos ========'
+docker-compose -f docker-compose-3-nacos.yml up
+#按需启动
+#docker-compose -f docker-compose-3-nacos.yml up -d nacos
+
+echo '==================4.4 启动 elk ========'
+docker-compose -f docker-compose-4-elk.yml up
 #按需启动
 #docker-compose -f docker-compose-4-elk.yml up -d elasticsearch
 #docker-compose -f docker-compose-4-elk.yml up -d kibana
-
-echo '==================4.4 启动 nacos ========'
-docker-compose -f docker-compose-4-nacos.yml up
-#按需启动
-#docker-compose -f docker-compose-3-nacos.yml up -d nacos
 
 echo '==================4.5 启动 prometheus、grafana ========'
 docker-compose -f docker-compose-5-monitor.yml up
 #按需启动
 #docker-compose -f docker-compose-5-monitor.yml up -d prometheus
 #docker-compose -f docker-compose-5-monitor.yml up -d grafana
+
+echo '==================4.5 启动 项目应用 ========'
+docker-compose -f docker-compose-6-application.yml up
+#按需启动
+#docker-compose -f docker-compose-5-monitor.yml up -d prometheus
+#docker-compose -f docker-compose-5-monitor.yml up -d grafana
+
 
 echo '当前目录:' && pwd
 

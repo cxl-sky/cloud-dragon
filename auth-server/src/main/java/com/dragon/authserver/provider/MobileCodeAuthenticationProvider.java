@@ -17,8 +17,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * 手机模式认证提供者，手机验证码模式认证工作通过该类完成
- * @author: yaohw
- * @create: 2019-09-29 20:00
+ * @author: chenxiaolong
+ * @date 2021年06月12日 16:55
  **/
 @Log4j2
 public class MobileCodeAuthenticationProvider implements AuthenticationProvider, MessageSourceAware {

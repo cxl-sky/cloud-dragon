@@ -2,6 +2,10 @@ package com.dragon.cmn.exception;
 
 import lombok.Getter;
 
+/**
+ * @author chenxiaolong
+ */
+
 @Getter
 public enum SystemErrorType implements ErrorType {
 

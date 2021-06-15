@@ -14,8 +14,8 @@ import java.io.IOException;
 /**
  * LogoutFilter过滤器会对/logout路径进行过滤
  * 这里直接转发到remove请求下
- * @author: yaohw
- * @create: 2020/8/8 8:58 下午
+ * @author: chenxiaolong
+ * @date 2021年06月12日 16:55
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
