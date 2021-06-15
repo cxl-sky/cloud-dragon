@@ -20,6 +20,15 @@ services:
       - dragon-net
     restart: always
 
+  resource-server:
+    container_name: dragon-resource-server
+    image: 970863783/resource-server:latest
+    env_file:
+      - ../env/application.env
+    networks:
+      - dragon-net
+    restart: always
+
 networks:
   dragon-net:
     external: true

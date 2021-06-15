@@ -43,32 +43,91 @@
 
 `cd resource_server/resource-client && mvn install`
 
-3. 使用 IDE 导入项目，由于项目中使用了 Lombok，所以需要安装 Lombok 插件，并配置 JDK，下载 Maven 依赖
+3. 使用 IDEA 导入项目，由于项目中使用了 Lombok，所以需要安装 Lombok 插件，并配置 JDK，下载 Maven 依赖，配置 Docker 环境
 
 ### 编译 & 启动
 > 进入项目 devops/docker-compose 目录，在这里提供了环境部署的 docker-compose.yml 文件，以便一键启动项目，文件有编号，按照文件编号顺序执行，也可以按照需要执行，具体步骤如下：
 
-* 1. 启动基础服务
-以下为程序的基础服务，其中数据库，KV缓存，消息中间件，注册中心，配置中心是必须要启动的基础服务。
+#### 1. 启动基础服务
+以下为程序的基础服务，其中数据库，KV缓存，消息中间件是必须要启动的基础服务。
      
-    |  服务           |   服务名         |  端口     | 备注                                            |
-    |----------------|-----------------|-----------|-------------------------------------------------|
-    |  数据库         |   mysql         |  3306     |  共用，应用使用不同的database     |
-    |  KV缓存         |   redis         |  6379     |  共用    |
-    |  消息中间件      |   rabbitmq      |  5672     |  共用                          |
-    |  注册与配置中心  |   nacos         |  8848     |  公用             |
-    |  日志收集中间件  |   zipkin-server |  9411     |  共用                          |
-    |  搜索引擎中间件  |   elasticsearch |  9200     |  共用    |
-    |  日志分析工具    |   kibana        |  5601     |  共用    |
-    |  数据可视化工具  |   grafana       |  3000     |  共用    |
+|  服务           |   服务名         |  端口     | 备注                                            |
+|----------------|-----------------|-----------|-------------------------------------------------|
+|  数据库         |   mysql         |  3306     |  共用，应用使用不同的database     |
+|  KV缓存         |   redis         |  6379     |  共用    |
+|  消息中间件      |   rabbitmq      |  5672     |  共用                          |
+|  注册与配置中心  |   nacos         |  8848     |  公用             |
+|  日志收集中间件  |   zipkin-server |  9411     |  共用                          |
+|  搜索引擎中间件  |   elasticsearch |  9200     |  共用    |
+|  日志分析工具    |   kibana        |  5601     |  共用    |
+|  数据可视化工具  |   grafana       |  3000     |  共用    |
 
-    - docker-compose-1-base.yml 这个文件中放了 redis、mysql、rabbitmq 这三个服务 ，可以使用 `docker-compose -f docker-compose-1-base.yml up` 一键启动，也可以使用 `docker-compose -f docker-compose-1-base.yml 服务名 up` 启动其中某一个服务。
+docker-compose-1-base.yml 这个文件中放了 redis、mysql、rabbitmq 这三个服务 ，可以使用 `docker-compose -f docker-compose-1-base.yml up` 一键启动，也可以使用 `docker-compose -f docker-compose-1-base.yml 服务名 up` 启动其中某一个服务。
 
-    - docker-compose-2-init-db.yml 这个文件主要用于初始化数据库，需要制定初始化脚本，具体可以参考其中的配置，如果已经初始化过，就不需要再次执行了。
+以上步骤执行完后，基础环境就创建好了，接下来需要初始化脚本并启动nacos。
 
-    - docker-compose-3-nacos.yml 这个文件主要为了启动 nacos 注册中心和配置中心，后续的服务都依赖于 nacos，因为是必须要启动的基础服务之一。
+#### 2. 创建数据库表及初始化数据
+    
+有部分应用需要预先初始化数据库表结构及数据 (例如 nacos、认证中心等)，本项目将初始化脚本放在了 conf 目录下各个子目录下的 `init.sql` 文件，例如: `config/auth/init.sql`，`config/nacos/init.sql`
+    
+本项目使用 docker 对数据库初始化，运行 `docker-compose -f docker-compose-2-init-db.yml up` 来初始化数据库表及数据，如果无需初始化的表，可以在 `docker-compose-2-init-db.yml`文件中，注释对应的初始化脚本文件
 
-    - 以上步骤执行完后，基础环境就创建好了，其他服务可以选择性启动，看个人需要。
 
+#### 3. 启动 nacos
+
+docker-compose-3-nacos.yml 这个文件主要为了启动 nacos 注册中心和配置中心，后续的服务都依赖于 nacos，是必须要启动的基础服务之一。
+
+
+#### 4. 启动应用
+目前已经开发的应用包括如下几个：
+
+| 服务名                     |  依赖基础组件             |   简介                        |  应用地址                 | 文档     |
+|---------------------------|-------------------------|------------------------------|-------------------------|----------|
+| gateway                   | nacos、mysql、redis      |  动态API网关                  |  http://localhost:10081  | 待完善    |
+| auth-server               | nacos、mysql、redis      |  认证中心                     |  开发调试 http://localhost:10082，正式发布后不暴露端口，通过网关转发  | 待完善    |
+| resource-server           | nacos、mysql、redis      |  鉴权中心                     |  开发调试 http://localhost:10083，正式发布后不暴露端口，通过网关转发  | 待完善    |
+| user-center               |                         |    用户中心，权限角色管理等       |  开发调试 http://localhost:10084，正式发布后不暴露端口，通过网关转发  | 待完善    |
+| upload-center             |                         |    文件上传中心                 |  开发调试 http://localhost:10085，正式发布后不暴露端口，通过网关转发  | 待完善    |
+| code-generate-center      |                         |    代码生成中心，快速生成前后端代码 |  开发调试 http://localhost:10086，正式发布后不暴露端口，通过网关转发  | 待完善    |
+到对应的项目目录下执行 `mvn clean package && docker build`，会将 jar 包打成一个 docker 镜像。
+
+运行 `docker-compose -f docker-compose-6-application up` 即可一键启动所有的项目。
+
+
+### 项目功能预览
+**用户管理**
+> 待完善
+
+**角色管理**
+> 待完善
+
+**权限管理**
+> 待完善
+
+**部门管理**
+> 待完善
+
+**API文档**
+> 待完善
+
+**文件上传**
+> 待完善
+
+**代码生成**
+> 待完善
+
+
+## 联系交流
+
+
+### 给作者 Star 支持
+
+如果你觉的有帮助到您，请帮忙点击右上角 star 支持我，您的支持是我的动力。
+
+### 学习交流，答疑解惑
+
+邮箱：ustbcxl@163.com
+
+加群[请戳这里](https://qm.qq.com/cgi-bin/qm/qr?k=gQw2MJysfnRTy9qKf8hWnK-xB24c__Dj&authKey=pxIxNHae0uFqcQenxT72xKQ3Isz3Xt5p9J+d2RCUPr2HaqLv+KElTKavXBPvgKsj&noverify=0)
 
 
