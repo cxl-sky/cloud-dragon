@@ -12,7 +12,3 @@ spring:
         group: ${NACOS_GROUP:DEFAULT_GROUP}
         namespace: ${spring.cloud.nacos.discovery.namespace}
         refresh-enabled: true
-        extension-configs:
-          - data-id: application.${spring.cloud.nacos.config.file-extension}
-            group: ${spring.cloud.nacos.config.group}
-            refresh: true

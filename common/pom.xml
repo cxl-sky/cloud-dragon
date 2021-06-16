@@ -28,8 +28,9 @@
         <fastjson.version>1.2.58</fastjson.version>
         <spring-rabbit.version>1.7.3.RELEASE</spring-rabbit.version>
         <durid.version>1.1.17</durid.version>
-        <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
+        <jasypt.version>2.1.1</jasypt.version>
+        <jwtt.version>0.9.1</jwtt.version>
     </properties>
 
     <dependencyManagement>
@@ -64,11 +65,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.nimbusds</groupId>
-                <artifactId>nimbus-jose-jwt</artifactId>
-                <version>${nimbus-jose-jwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -106,9 +102,9 @@
                 <version>${lombok.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>${druid.version}</version>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.denghc</groupId>
@@ -125,6 +121,11 @@
                 <artifactId>spring-rabbit</artifactId>
                 <version>${spring-rabbit.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwtt.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -132,6 +133,14 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,6 +1,6 @@
 package com.dragon.authserver.granter;
 
-import com.dragon.authserver.Token.MobileCodeAuthenticationToken;
+import com.dragon.authserver.token.MobileCodeAuthenticationToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.AuthenticationManager;

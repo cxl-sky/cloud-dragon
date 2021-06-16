@@ -1,6 +1,6 @@
 package com.dragon.authserver.provider;
 
-import com.dragon.authserver.Token.MobileCodeAuthenticationToken;
+import com.dragon.authserver.token.MobileCodeAuthenticationToken;
 import com.dragon.authserver.service.DragonUserDetailServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.MessageSource;

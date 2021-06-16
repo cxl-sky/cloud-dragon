@@ -2,6 +2,8 @@ package com.dragon.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.dragon.resource.client")
 @RestController
+@ConfigurationPropertiesScan(basePackages = "com.dragon.gateway.properties")
 public class GatewayApplication {
 
     public static void main(String[] args) {

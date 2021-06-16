@@ -1,7 +1,7 @@
 package com.dragon.authserver.config;
 
 import com.dragon.authserver.granter.MobileCodeTokenGranter;
-import com.dragon.authserver.vo.DragonUser;
+import com.dragon.cmn.constants.SystemConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -69,7 +69,7 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
-        accessTokenConverter.setSigningKey("dragon");
+        accessTokenConverter.setSigningKey(SystemConstant.SIGNING_KEY);
         return accessTokenConverter;
     }
 
