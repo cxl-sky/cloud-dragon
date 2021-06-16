@@ -1,7 +1,8 @@
 package com.dragon.authserver.config;
 
 import com.dragon.authserver.granter.MobileCodeTokenGranter;
-import com.dragon.cmn.constants.SystemConstant;
+import com.dragon.constants.SystemConstant;
+import com.dragon.pojo.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -121,9 +121,12 @@ public class Oauth2Config extends AuthorizationServerConfigurerAdapter {
     public TokenEnhancer tokenEnhancer() {
         return (accessToken, authentication) -> {
             final Map<String, Object> additionalInfo = new HashMap<>(2);
-            User user = (User) authentication.getUserAuthentication().getPrincipal();
+            AuthUser user = (AuthUser) authentication.getUserAuthentication().getPrincipal();
             if (user != null) {
                 additionalInfo.put("username", user.getUsername());
+                additionalInfo.put("id", user.getId());
+                additionalInfo.put("author", user.getAuthor());
+                additionalInfo.put("remark", user.getRemark());
             }
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;

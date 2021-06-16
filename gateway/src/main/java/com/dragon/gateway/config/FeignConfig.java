@@ -2,7 +2,6 @@ package com.dragon.gateway.config;
 
 import feign.Logger;
 import feign.codec.Decoder;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.support.ResponseEntityDecoder;

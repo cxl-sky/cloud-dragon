@@ -24,7 +24,7 @@ public class AuthenticationClientImpl {
     private AuthenticationService authenticationService;
 
     @PostMapping(value = "/auth/permission")
-    public boolean decide(@RequestParam("url") String url, @RequestParam("method") String method,HttpServletRequest request) {
+    public String decide(@RequestParam("url") String url, @RequestParam("method") String method, HttpServletRequest request) {
         return authenticationService.decide(new HttpServletRequestAuthWrapper(request, url, method));
     }
 }

@@ -1,4 +1,4 @@
-package com.dragon.cmn.exception;
+package com.dragon.exception;
 
 import lombok.Getter;
 

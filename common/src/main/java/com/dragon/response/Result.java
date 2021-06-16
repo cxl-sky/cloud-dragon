@@ -1,8 +1,8 @@
-package com.dragon.cmn.response;
+package com.dragon.response;
 
-import com.dragon.cmn.exception.BaseException;
-import com.dragon.cmn.exception.ErrorType;
-import com.dragon.cmn.exception.SystemErrorType;
+import com.dragon.exception.BaseException;
+import com.dragon.exception.ErrorType;
+import com.dragon.exception.SystemErrorType;
 import lombok.Data;
 
 import java.time.Instant;

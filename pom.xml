@@ -39,6 +39,12 @@
             <groupId>com.dragon</groupId>
             <artifactId>common</artifactId>
             <version>${common.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

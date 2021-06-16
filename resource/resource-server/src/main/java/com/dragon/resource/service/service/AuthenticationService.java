@@ -13,6 +13,6 @@ public interface AuthenticationService {
      * @param authRequest
      * @return 是否有权限
      */
-    boolean decide(HttpServletRequest authRequest);
+    String decide(HttpServletRequest authRequest);
 
 }

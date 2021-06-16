@@ -1,15 +1,8 @@
 package com.dragon.gateway.filters;
 
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONString;
-import com.alibaba.fastjson.JSONObject;
-import com.dragon.cmn.constants.SystemConstant;
+import com.dragon.constants.SystemConstant;
 import com.dragon.gateway.properties.AuthProperties;
 import com.dragon.resource.client.AuthenticationClient;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +28,6 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class AccessGatewayFilter implements GlobalFilter {
 
-    private static final String X_CLIENT_TOKEN_USER = "x-client-token-user";
-    private static final String BEARER = "Bearer ";
 
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
@@ -73,34 +64,18 @@ public class AccessGatewayFilter implements GlobalFilter {
         }
 
         // 调用签权服务看用户是否有权限，若有权限进入下一个filter
-        boolean decide = authenticationClient.decide(authentication, url, method);
-        if (decide) {
+        String userInfo = authenticationClient.decide(authentication, url, method);
+        if (StringUtils.isNotBlank(userInfo)) {
             // 以下设置权限，必须携带token
             if (StringUtils.isEmpty(authentication)) {
                 return unauthorized(exchange);
             }
             ServerHttpRequest.Builder builder = request.mutate();
-            // 将jwt token中的用户信息传给服务
-            builder.header(X_CLIENT_TOKEN_USER, getUserToken(authentication));
+            // 将用户信息传给服务
+            builder.header(SystemConstant.X_CLIENT_TOKEN_USER, userInfo);
             return chain.filter(exchange.mutate().request(builder.build()).build());
         }
         return unauthorized(exchange);
-    }
-
-    /**
-     * 提取jwt token中的数据，转为json
-     *
-     * @param jwtToken
-     * @return
-     */
-    private String getUserToken(String jwtToken) {
-        if (jwtToken.startsWith(BEARER)) {
-            jwtToken = StringUtils.substring(jwtToken, BEARER.length());
-        }
-        Jws<Claims> claimsJws = Jwts.parser()
-                .setSigningKey(SystemConstant.SIGNING_KEY.getBytes())
-                .parseClaimsJws(jwtToken);
-        return JSONObject.toJSONString(claimsJws);
     }
 
     /**

@@ -1,7 +1,9 @@
-package com.dragon.cmn.exception;
+package com.dragon.exception;
 
 /**
- * Created by chenxiaolong on 2018/6/2.
+ *
+ * @author chenxiaolong
+ * @date 2018/6/2
  */
 public class ServiceException extends BaseException {
 

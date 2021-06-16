@@ -22,6 +22,6 @@ public interface AuthenticationClient {
      * @return
      */
     @PostMapping(value = "/auth/permission")
-    boolean decide(@RequestHeader(HttpHeaders.AUTHORIZATION) String authentication, @RequestParam("url") String url, @RequestParam("method") String method);
+    String decide(@RequestHeader(HttpHeaders.AUTHORIZATION) String authentication, @RequestParam("url") String url, @RequestParam("method") String method);
 
 }

@@ -1,9 +1,10 @@
 package com.dragon.authserver.service;
 
-import com.dragon.authserver.vo.DragonUser;
+import com.dragon.pojo.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,18 +30,17 @@ public class DragonUserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+        // 测试使用假数据，实际需要调用用户服务查询用户数据
         if (!username.equals("admin")) {
             throw new UsernameNotFoundException("no user found");
         } else {
 
             String password = passwordEncoder.encode("123456");
 
-            return new org.springframework.security.core.userdetails.User(
+            return new AuthUser(
+                    "1",
                     username,
                     password,
-                    true,
-                    true,
-                    true,
                     true,
                     this.obtainGrantedAuthorities());
         }
@@ -55,8 +55,6 @@ public class DragonUserDetailServiceImpl implements UserDetailsService {
         String role = "admin";
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority(role));
-//        Set<Role> roles = roleService.queryUserRolesByUserId(user.getId());
-//        log.info("user:{},roles:{}", user.getUsername(), roles);
         return authorities;
     }
 
@@ -75,7 +73,7 @@ public class DragonUserDetailServiceImpl implements UserDetailsService {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(role));
         String password = passwordEncoder.encode("123456");
-        return new org.springframework.security.core.userdetails.User(
+        return new User(
                 mobile,
                 password,
                 true,
