@@ -1,6 +1,6 @@
 <p align="center">
-        <img src="docs/logo.png" width="50px" syt height="50px" />
-        <strong>云龙  Cloud Dragon</strong>
+        <img src="/docs/logo.png" width="50px" syt height="50px" />
+        <strong>云龙 Cloud Dragon</strong>
 </p>
 <p align="center">
 	<strong>适合于企业级别的微服务开发脚手架，功能齐全，开箱即用，部署快捷</strong>
