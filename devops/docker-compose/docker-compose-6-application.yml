@@ -1,5 +1,14 @@
 version: '3'
 services:
+  web:
+    container_name: dragon-web
+    image: 970863783/web:latest
+    networks:
+      - dragon-net
+    ports:
+      - 18888:80
+    restart: always
+
   gateway:
     container_name: dragon-gateway
     image: 970863783/gateway:latest
