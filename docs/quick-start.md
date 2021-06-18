@@ -46,7 +46,7 @@
 3. 使用 IDEA 导入项目，由于项目中使用了 Lombok，所以需要安装 Lombok 插件，并配置 JDK，下载 Maven 依赖，配置 Docker 环境
 
 ### 编译 & 启动
-> 进入项目 devops/docker-compose 目录，在这里提供了环境部署的 docker-compose.yml 文件，以便一键启动项目，文件有编号，按照文件编号顺序执行，也可以按照需要执行，具体步骤如下：
+> 进入项目 devops/docker-compose 目录，在这里0提供了环境部署的 docker-compose.yml 文件，以便一键启动项目，文件有编号，按照文件编号顺序执行，也可以按照需要执行，具体步骤如下：
 
 #### 1. 启动基础服务
 以下为程序的基础服务，其中数据库，KV缓存，消息中间件是必须要启动的基础服务。
@@ -62,7 +62,7 @@
 |  日志分析工具    |   kibana        |  5601     |  共用    |
 |  数据可视化工具  |   grafana       |  3000     |  共用    |
 
-docker-compose-1-base.yml 这个文件中放了 redis、mysql、rabbitmq 这三个服务 ，可以使用 `docker-compose -f docker-compose-1-base.yml up` 一键启动，也可以使用 `docker-compose -f docker-compose-1-base.yml 服务名 up` 启动其中某一个服务。
+docker-compose-1-base.yml 这个文件中放了 redis、mysql、rabbitmq 这三个服务 ，可以使用 `docker-compose -f docker-compose-1-base.yml up` 一键启动，也可以使用 `docker-compose -f docker-compose-1-base.yml up -d 服务名` 启动其中某一个服务。
 
 以上步骤执行完后，基础环境就创建好了，接下来需要初始化脚本并启动nacos。
 
@@ -86,9 +86,10 @@ docker-compose-3-nacos.yml 这个文件主要为了启动 nacos 注册中心和�
 | gateway                   | nacos、mysql、redis      |  动态API网关                  |  http://localhost:10081  | 待完善    |
 | auth-server               | nacos、mysql、redis      |  认证中心                     |  开发调试 http://localhost:10082，正式发布后不暴露端口，通过网关转发  | 待完善    |
 | resource-server           | nacos、mysql、redis      |  鉴权中心                     |  开发调试 http://localhost:10083，正式发布后不暴露端口，通过网关转发  | 待完善    |
-| user-center               |                         |    用户中心，权限角色管理等       |  开发调试 http://localhost:10084，正式发布后不暴露端口，通过网关转发  | 待完善    |
-| upload-center             |                         |    文件上传中心                 |  开发调试 http://localhost:10085，正式发布后不暴露端口，通过网关转发  | 待完善    |
-| code-generate-center      |                         |    代码生成中心，快速生成前后端代码 |  开发调试 http://localhost:10086，正式发布后不暴露端口，通过网关转发  | 待完善    |
+| user-center               |                         |  用户中心，权限角色管理等        |  开发调试 http://localhost:10084，正式发布后不暴露端口，通过网关转发  | 待完善    |
+| upload-center             |                         |  文件上传中心                  |  开发调试 http://localhost:10085，正式发布后不暴露端口，通过网关转发  | 待完善    |
+| code-generate-center      |                         |  代码生成中心，快速生成前后端代码  |  开发调试 http://localhost:10086，正式发布后不暴露端口，通过网关转发  | 待完善    |
+| web                       |                         |  前端项目                     |  http://localhost:18888  | 待完善    |
 到对应的项目目录下执行 `mvn clean package && docker build`，会将 jar 包打成一个 docker 镜像。
 
 运行 `docker-compose -f docker-compose-6-application up` 即可一键启动所有的项目。

@@ -40,6 +40,26 @@ services:
     env_file:
       - ../env/mysql.env
 
+  minio:
+    image: minio/minio
+    container_name: dragon-minio
+    command: server /data
+    restart: always
+    networks:
+      - dragon-net
+    ports:
+      - 9000:9000
+    volumes:
+      - ../data/minio/data:/data
+      - ../data/minio/config:/root/.minio
+    env_file:
+      - ../env/minio.env
+#  docker run -p 9000:9000 --name minio1 \
+#  -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" \
+#  -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" \
+#  -v D:\data:/data \
+#  -v D:\minio\config:/root/.minio \
+#  minio/minio server /data
 networks:
   dragon-net:
     external: true
