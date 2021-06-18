@@ -1,5 +1,5 @@
 <p align="center">
-        <img src="/docs/logo.png" width="50px" syt height="50px" />
+        <img src="docs/logo.png" width="50px" syt height="50px" />
         <strong>云龙 Cloud Dragon</strong>
 </p>
 <p align="center">
