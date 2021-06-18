@@ -1,4 +1,11 @@
-<p align="left">
+<p align="center">
+        <img src="logo.png" width="50px" syt height="50px" />
+        <strong>云龙  Cloud Dragon</strong>
+</p>
+<p align="center">
+	<strong>适合于企业级别的微服务开发脚手架，功能齐全，开箱即用，部署快捷</strong>
+</p>
+<p align="center">
 	<a target="_blank" href="https://gitter.im/dragon_cloud/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
 		<img src="https://badges.gitter.im/dragon_cloud/community.svg" />
 	</a>
@@ -10,6 +17,12 @@
 	</a>
     <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=gQw2MJysfnRTy9qKf8hWnK-xB24c__Dj&authKey=pxIxNHae0uFqcQenxT72xKQ3Isz3Xt5p9J+d2RCUPr2HaqLv+KElTKavXBPvgKsj&noverify=0">
 		<img src="https://img.shields.io/badge/QQ%E7%BE%A4-878510003-blue" />
+	</a>
+    <a target="_blank" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">
+		<img src="https://img.shields.io/badge/JDK-8+-green.svg" />
+	</a>
+	<a target="_blank" href="https://spring.io/projects/spring-boot">
+		<img src="https://img.shields.io/badge/spring%20boot-2.2.5-yellowgreen" />
 	</a>
 </p>
 

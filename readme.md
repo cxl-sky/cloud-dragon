@@ -1,5 +1,5 @@
-<img src="docs/logo.png" width="50px" syt height="50px" />
 <p align="center">
+        <img src="docs/logo.png" width="50px" syt height="50px" />
         <strong>云龙  Cloud Dragon</strong>
 </p>
 <p align="center">
@@ -21,23 +21,27 @@
     <a target="_blank" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">
 		<img src="https://img.shields.io/badge/JDK-8+-green.svg" />
 	</a>
+	<a target="_blank" href="https://spring.io/projects/spring-boot">
+		<img src="https://img.shields.io/badge/spring%20boot-2.2.5-yellowgreen" />
+	</a>
 </p>
 
 ------------------------------
 > 目前项目处于开发阶段，部分功能已经可以使用，后续会逐步完成其他规划内容，并完善项目文档，如果你在使用过程中遇到任何问题，可以通过 QQ 群聊联系我，[请戳这里](https://qm.qq.com/cgi-bin/qm/qr?k=gQw2MJysfnRTy9qKf8hWnK-xB24c__Dj&authKey=pxIxNHae0uFqcQenxT72xKQ3Isz3Xt5p9J+d2RCUPr2HaqLv+KElTKavXBPvgKsj&noverify=0) 加入群聊。
 
-
 ## 📚 项目介绍
 
+Cloud Dragon 是一套适合于企业级使用的微服务脚手架项目，可以帮助快速构建微服务架构，采用前后端分离架构， 后端主要以 Spring Cloud Alibaba & Nacos 为主，前端主要以 Vue & Element-UI
+为主。
 
-Cloud Dragon 是一套适合于企业级使用的微服务脚手架项目，可以帮助快速构建微服务架构，采用前后端分离架构， 后端主要以 Spring Cloud Alibaba & Nacos 为主，前端主要以 Vue & Element-UI 为主。
-
-Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方式控制令牌发放与销毁。 统一使用 Docker 部署，提供一键脚本安装，快速部署使用。支持一键快速生成前后端代码，提高开发开发效率，只需专注于业务，是一个非常适用的微服务快速开发脚手架。
+Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方式控制令牌发放与销毁。 统一使用 Docker
+部署，提供一键脚本安装，快速部署使用。支持一键快速生成前后端代码，提高开发开发效率，只需专注于业务，是一个非常适用的微服务快速开发脚手架。
 
 - [项目地址戳这里，记得 Star 支持一下哦](https://github.com/cxl-sky/cloud-dragon)
 - [10 分钟快速开始](https://github.com/cxl-sky/cloud-dragon/blob/master/docs/quick-start.md)
 
 ## 主要功能及规划
+
 ### 1. 主要技术栈及规划：
 
 |  服务     | 使用技术                       |   进度        |    备注   |
@@ -64,7 +68,6 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 |  持续集成与部署 | Jenkins + Docker + Docker Compose   |   🏗          |           |
 |  集群部署 | Jenkins + Docker Swarm                  |   🏗          |  使用 Docker 原生集群部署管理工具         |
 
-
 ### 2. 平台管理页面主要功能规划：
 
 |  服务        | 使用技术     |   进度         |    备注   |
@@ -79,10 +82,15 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 |  缓存管理     | 自开发       |   🏗          |  通过页面可视化管理缓存         |
 
 ## 🥞 系统架构
+
 ### 系统架构图
+
 > 待完善
+
 ### 项目服务
+
 > 以下服务均采用 Docker & Docker Compose，支持一键部署。（待完善）
+
 #### 1. 基础服务
 
 |  服务           |   服务名         |  端口      |   进度 | 备注                                            |
@@ -97,6 +105,7 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 |  对象存储服务    |   MinIO          |  3001     | 🏗     | 共用                                             |
 
 #### 2.应用服务
+
 > 以下服务均需要依赖基础服务中的 nacos，务必确保 nacos 正常运行，项目的配置文件均保存在 nacos 配置中心统一管理，本地无配置
 > 所有应用都需要进过网关，务必保证网关启动（开发环境调试可不做限制）
 
@@ -111,7 +120,6 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 | code-generate-center  | 🏗  |    代码生成中心，快速生成前后端代码 |  http://localhost:10086  | 待完善    |
 |未完待续                | ... |                    ...        | ...                      | ...      |
 
-
 ## 联系交流
 
 ### 加入贡献代码
@@ -125,7 +133,8 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 ### 学习交流
 
 - 邮箱：ustbcxl@163.com
-- 加群[请戳这里](https://qm.qq.com/cgi-bin/qm/qr?k=gQw2MJysfnRTy9qKf8hWnK-xB24c__Dj&authKey=pxIxNHae0uFqcQenxT72xKQ3Isz3Xt5p9J+d2RCUPr2HaqLv+KElTKavXBPvgKsj&noverify=0)
+-
+加群[请戳这里](https://qm.qq.com/cgi-bin/qm/qr?k=gQw2MJysfnRTy9qKf8hWnK-xB24c__Dj&authKey=pxIxNHae0uFqcQenxT72xKQ3Isz3Xt5p9J+d2RCUPr2HaqLv+KElTKavXBPvgKsj&noverify=0)
 - [项目地址戳这里，记得 Star 支持一下哦](https://github.com/cxl-sky/cloud-dragon)
 - [10 分钟快速开始](https://github.com/cxl-sky/cloud-dragon/blob/master/docs/quick-start.md)
 
