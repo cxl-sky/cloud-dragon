@@ -15,5 +15,6 @@ public class SystemConstant {
      * 内网请求头，携带用户信息
      */
     public static final String X_CLIENT_TOKEN_USER = "x-client-token-user";
+    public static final String X_CLIENT_TOKEN_ORIGIN = "x-client-token-origin";
 
 }

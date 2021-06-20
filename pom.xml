@@ -10,6 +10,7 @@
         <module>auth-server</module>
         <module>gateway</module>
         <module>resource</module>
+        <module>user-center</module>
     </modules>
     <packaging>pom</packaging>
 

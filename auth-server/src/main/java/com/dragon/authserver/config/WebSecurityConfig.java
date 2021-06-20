@@ -29,8 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("DragonUserDetailService")
     private UserDetailsService userDetailsService;
     @Autowired
-    private IgnoreLogoutFilter ignoreLogoutFilter;
-    @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
     @Bean
@@ -68,8 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .formLogin().loginPage("/login").permitAll()
                 .and().authorizeRequests().anyRequest().permitAll()
-                .and().csrf().disable().cors()
-                .and().addFilterAt(ignoreLogoutFilter, LogoutFilter.class);
+                .and().csrf().disable().cors();
     }
 
     /**

@@ -73,6 +73,7 @@ public class AccessGatewayFilter implements GlobalFilter {
             ServerHttpRequest.Builder builder = request.mutate();
             // 将用户信息传给服务
             builder.header(SystemConstant.X_CLIENT_TOKEN_USER, userInfo);
+            builder.header(SystemConstant.X_CLIENT_TOKEN_ORIGIN, authentication);
             return chain.filter(exchange.mutate().request(builder.build()).build());
         }
         return unauthorized(exchange);
