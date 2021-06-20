@@ -1,6 +1,6 @@
 package com.dragon.user.server.controller;
 
-import cn.hutool.json.JSONObject;
+import com.dragon.base.BaseController;
 import com.dragon.pojo.DragonUser;
 import com.dragon.response.Result;
 import com.dragon.user.client.entity.Menu;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     private UserUtils userUtils;

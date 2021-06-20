@@ -29,6 +29,8 @@
         <spring-rabbit.version>1.7.3.RELEASE</spring-rabbit.version>
         <durid.version>1.1.17</durid.version>
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
+        <mybatis-plus-generator.version>3.3.0</mybatis-plus-generator.version>
+        <velocity-engine-core.version>2.1</velocity-engine-core.version>
         <jasypt.version>2.1.1</jasypt.version>
         <jwtt.version>0.9.1</jwtt.version>
     </properties>
@@ -60,6 +62,16 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity-engine-core.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
