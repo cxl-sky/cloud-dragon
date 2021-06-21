@@ -17,7 +17,7 @@ public class MyGenerator {
         //1、全局配置
         GlobalConfig globalConfig = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        globalConfig.setOutputDir(projectPath + "/generator");  //生成路径(一般都是生成在此项目的src/main/java下面)
+        globalConfig.setOutputDir(projectPath + "/user-center/user-server/src/main/java");  //生成路径(一般都是生成在此项目的src/main/java下面)
         globalConfig.setAuthor("chenxiaolong"); //设置作者
         globalConfig.setOpen(false);
         globalConfig.setFileOverride(true); //第二次生成会把第一次生成的覆盖掉
@@ -28,7 +28,7 @@ public class MyGenerator {
 
         //2、数据源配置
         DataSourceConfig dataSource = new DataSourceConfig();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/testasdfasdf?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/user-center?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8");
         dataSource.setDriverName("com.mysql.jdbc.Driver");
         dataSource.setUsername("root");
         dataSource.setPassword("root123");
@@ -36,7 +36,7 @@ public class MyGenerator {
 
         // 3、包配置
         PackageConfig packageInfo = new PackageConfig();
-        packageInfo.setModuleName("client");
+        packageInfo.setModuleName("server");
         packageInfo.setParent("com.dragon.user");
         mpg.setPackageInfo(packageInfo);
 
@@ -48,16 +48,16 @@ public class MyGenerator {
         strategy.setSuperEntityClass("com.dragon.base.BaseEntity");
         strategy.setTablePrefix("sys_"); // 表名前缀
         strategy.setEntityLombokModel(true); //使用lombok
-        strategy.setInclude("sys_user");  // 逆向工程使用的表   如果要生成多个,这里可以传入String[]
+        strategy.setInclude("sys_user_role","sys_role");  // 逆向工程使用的表   如果要生成多个,这里可以传入String[]
         mpg.setStrategy(strategy);
 
 //        ConfigBuilder config = new ConfigBuilder(packageInfo, dataSource, strategy, mpg.getTemplate(), globalConfig);
-        ConfigBuilder config = new ConfigBuilder(null, dataSource, null, null, null);
-
-        List<TableInfo> tableInfoList = config.getTableInfoList();
-        System.out.println(tableInfoList);
+//        ConfigBuilder config = new ConfigBuilder(null, dataSource, null, null, null);
+//
+//        List<TableInfo> tableInfoList = config.getTableInfoList();
+//        System.out.println(tableInfoList);
         //5、执行
-//        mpg.execute();
+        mpg.execute();
     }
 
 }

@@ -1,6 +1,9 @@
 package com.dragon.authserver.service;
 
 import com.dragon.pojo.AuthUser;
+import com.dragon.user.client.UserClient;
+import com.dragon.user.client.entity.Role;
+import com.dragon.user.client.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author chenxiaolong
@@ -24,26 +29,28 @@ import java.util.Set;
 @Component("DragonUserDetailService")
 public class DragonUserDetailServiceImpl implements UserDetailsService {
 
+    public static void main(String[] args) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encode = passwordEncoder.encode("123456");
+        System.out.println(encode);
+    }
+
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserClient userClient;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        // 测试使用假数据，实际需要调用用户服务查询用户数据
-        if (!username.equals("admin")) {
+        UserVo userVo = userClient.selectUserByUsername(username);
+        if (userVo == null) {
             throw new UsernameNotFoundException("no user found");
-        } else {
-
-            String password = passwordEncoder.encode("123456");
-
-            return new AuthUser(
-                    "1",
-                    username,
-                    password,
-                    true,
-                    this.obtainGrantedAuthorities());
         }
+        return new AuthUser(
+                userVo.getUserId(),
+                userVo.getUsername(),
+                userVo.getPassword(),
+                userVo.getStatus() == 1,
+                this.obtainGrantedAuthorities(userVo.getRoles()));
     }
 
     /**
@@ -51,11 +58,8 @@ public class DragonUserDetailServiceImpl implements UserDetailsService {
      *
      * @return
      */
-    protected Set<GrantedAuthority> obtainGrantedAuthorities() {
-        String role = "admin";
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority(role));
-        return authorities;
+    protected Set<GrantedAuthority> obtainGrantedAuthorities(List<Role> roles) {
+        return roles.stream().map(role-> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toSet());
     }
 
     /**
@@ -66,20 +70,7 @@ public class DragonUserDetailServiceImpl implements UserDetailsService {
      * @throws UsernameNotFoundException
      */
     public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
-        if (mobile == null) {
-            throw new UsernameNotFoundException("not found mobile user:" + mobile);
-        }
-        String role = "admin";
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role));
-        String password = passwordEncoder.encode("123456");
-        return new User(
-                mobile,
-                password,
-                true,
-                true,
-                true,
-                true,
-                this.obtainGrantedAuthorities());
+        // todo
+        return null;
     }
 }

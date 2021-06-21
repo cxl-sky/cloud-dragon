@@ -21,11 +21,11 @@ public class AuthUser extends User implements Serializable {
 
     private static final long serialVersionUID = 5973260445530350343L;
 
-    private String id;
+    private Long id;
     private String author;
     private String remark;
 
-    public AuthUser(String id, String username, String password, boolean enable, Set<GrantedAuthority> authorities) {
+    public AuthUser(Long id, String username, String password, boolean enable, Set<GrantedAuthority> authorities) {
         super(username, password, enable, true, true, true, authorities);
         this.id = id;
         this.author = "longlongago";

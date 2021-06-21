@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.dragon.resource.client")
+@EnableFeignClients(basePackages = "com.dragon")
 @RestController
 @ConfigurationPropertiesScan(basePackages = "com.dragon.gateway.properties")
 public class GatewayApplication {

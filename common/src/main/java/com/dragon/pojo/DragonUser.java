@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 public class DragonUser {
 
-    private String id;
+    private Long id;
     private String username;
     private Set<String> authorities;
     private String author;
