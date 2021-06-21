@@ -38,6 +38,15 @@ services:
       - dragon-net
     restart: always
 
+  code-generator:
+    container_name: dragon-code-generator
+    image: 970863783/code-generator:latest
+    env_file:
+      - ../env/application.env
+    networks:
+      - dragon-net
+    restart: always
+
 networks:
   dragon-net:
     external: true
