@@ -28,7 +28,7 @@
         <fastjson.version>1.2.58</fastjson.version>
         <spring-rabbit.version>1.7.3.RELEASE</spring-rabbit.version>
         <durid.version>1.1.17</durid.version>
-        <mybatis-plus.version>3.4.2</mybatis-plus.version>
+        <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <mybatis-plus-generator.version>3.3.0</mybatis-plus-generator.version>
         <velocity-engine-core.version>2.1</velocity-engine-core.version>
         <jasypt.version>2.1.1</jasypt.version>

@@ -54,11 +54,11 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 |  授权认证 | Spring Cloud Security OAuth2  |   ✅          |  根据 Token 判断权限服务   |
 |  服务容错 | Spring Cloud Sentinel         |   🏗          |           |
 |  服务调用 | Spring Cloud OpenFeign        |   ✅          |           |
-|  对象存储 | FastDFS/Minio                 |   🏗          |           |
+|  对象存储 | Minio                         |   ✅          |           |
 |  任务调度 | XXL-Job                       |   🏗          |           |
 |  分库分表 | Sharding Sphere               |   🏗          |           |
 |  数据权限 | Mybatis Plus                  |   🏗          |  对原查询做增强，业务代码不用控制，即可实现。         |
-|  代码生成 |                               |   🏗          |  前后端代码的生成，支持Vue         |
+|  代码生成 |                               |   🏗50%（后端代码生成完成，前端代码生成进行中）          |  前后端代码的生成，支持Vue         |
 |  文档管理 | Swagger2                      |   🏗          |           |
 |  服务监控 | Spring Boot Admin             |   🏗          |           |
 |  链路追踪 | SkyWalking                    |   🏗          |           |
@@ -102,7 +102,7 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 |  搜索引擎中间件  |   elasticsearch  |  9200     | ✅     | 共用                                            |
 |  日志分析工具    |   kibana         |  5601     | ✅     | 共用                                            |
 |  数据可视化工具  |   grafana        |  3000     | ✅     | 共用                                            |
-|  对象存储服务    |   MinIO          |  3001     | 🏗     | 共用                                             |
+|  对象存储服务    |   MinIO          |  9000     | ✅     | 共用                                             |
 
 #### 2.应用服务
 
@@ -111,13 +111,13 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 
 | 服务名                 | 进度 |    简介                      |  应用地址                  | 文档     |
 |-----------------------|-----|-----------------------------|--------------------------|----------|
-| dragon-web            | 🏗  |   前端管理页面                 |  http://localhost:10080  | 待完善    |
+| dragon-web            | ✅  |   前端管理页面（逐步完善中）      |  http://localhost:18888  | 待完善    |
 | gateway               | ✅  |      统一API网关，负责路由转发   |  http://localhost:10081  | 待完善    |
 | auth-server           | ✅  |            认证服务，生成jwt    |  http://localhost:10082  | 待完善    |
 | resource-server       | ✅  |       授权服务，判断是否可以访问  |  http://localhost:10083  | 待完善    |
-| user-center           | 🏗  |    用户中心，权限角色管理等       |  http://localhost:10084  | 待完善    |
+| user-center           | ✅  |    用户中心，权限角色管理等（逐步完善中）       |  http://localhost:10084  | 待完善    |
 | upload-center         | 🏗  |    文件上传中心                 |  http://localhost:10085  | 待完善    |
-| code-generate-center  | 🏗  |    代码生成中心，快速生成前后端代码 |  http://localhost:10086  | 待完善    |
+| code-generate         | ✅  |    代码生成中心，快速生成前后端代码（逐步完善中） |  http://localhost:10086  | 待完善    |
 |未完待续                | ... |                    ...        | ...                      | ...      |
 
 ## 联系交流

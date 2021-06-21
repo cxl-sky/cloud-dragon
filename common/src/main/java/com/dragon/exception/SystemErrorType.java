@@ -34,6 +34,8 @@ public enum SystemErrorType implements ErrorType {
     INVALID_REQUEST("050006", "错误的请求"),
     INVALID_GRANT("050007", "用户或密码错误"),
 
+    // 数据库相关
+    MYSQL_SYNTAX_ERROR("060000", "数据库返回错误"),
     ;
 
     /**

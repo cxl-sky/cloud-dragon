@@ -11,6 +11,7 @@
         <module>gateway</module>
         <module>resource</module>
         <module>user-center</module>
+        <module>code-generator</module>
     </modules>
     <packaging>pom</packaging>
 
