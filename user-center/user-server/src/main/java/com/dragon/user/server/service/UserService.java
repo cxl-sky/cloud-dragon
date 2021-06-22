@@ -1,7 +1,13 @@
 package com.dragon.user.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dragon.user.client.dto.PermissionDecideDto;
 import com.dragon.user.client.entity.User;
+import com.dragon.user.client.vo.MenuVo;
+import com.dragon.user.client.vo.UserVo;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -13,4 +19,24 @@ import com.dragon.user.client.entity.User;
  */
 public interface UserService extends IService<User> {
 
+    /**
+     * 根据名字查找
+     * @param username
+     * @return
+     */
+    UserVo selectUserVoByUsername(String username);
+
+    /**
+     * 判断是否有权限
+     * @param permissionDecideDto
+     * @return
+     */
+    boolean isHasPermission(PermissionDecideDto permissionDecideDto);
+
+    /**
+     * 获取权限菜单
+     * @param authorities
+     * @return
+     */
+    List<MenuVo> getPermissionMenus(Set<String> authorities);
 }

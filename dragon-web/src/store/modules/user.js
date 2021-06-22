@@ -70,7 +70,7 @@ const actions = {
 
         commit('SET_ROLES', authorities)
         commit('SET_NAME', username)
-        commit('SET_AVATAR', 'avatar')
+        commit('SET_AVATAR', 'https://www.cxlsky.com/images/avatar.png')
         resolve(data)
       }).catch(error => {
         reject(error)

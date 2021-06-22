@@ -48,6 +48,7 @@ public class MyGenerator {
         strategy.setSuperEntityClass("com.dragon.base.BaseEntity");
         strategy.setTablePrefix("sys_"); // 表名前缀
         strategy.setEntityLombokModel(true); //使用lombok
+        strategy.setRestControllerStyle(true);
         strategy.setInclude("sys_role_menu");  // 逆向工程使用的表   如果要生成多个,这里可以传入String[]
         mpg.setStrategy(strategy);
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.dragon.user.server.mapper.RoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.dragon.user.server.entity.Role">
+    <resultMap id="BaseResultMap" type="com.dragon.user.client.entity.Role">
         <id column="role_id" property="roleId" />
         <result column="role_name" property="roleName" />
         <result column="remark" property="remark" />

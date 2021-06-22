@@ -28,85 +28,15 @@ public class UserClientImpl {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private RoleService roleService;
-    @Autowired
-    private UserRoleService userRoleService;
-    @Autowired
-    private MenuService menuService;
-    @Autowired
-    private RoleMenuService roleMenuService;
-    @Autowired
-    private ApiService apiService;
 
     @GetMapping(value = "/username")
     public UserVo selectUserByUsername(@RequestParam("username") String username) {
-        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
-        if (user == null) {
-            return null;
-        }
-        List<UserRole> userRoles = userRoleService.list(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getUserId()));
-        List<Role> roles = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(userRoles)) {
-            roles = roleService.list(new LambdaQueryWrapper<Role>().in(Role::getRoleId, userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toSet())));
-        }
-        return buildUserVo(user, roles);
+        return userService.selectUserVoByUsername(username);
     }
 
     @PostMapping("/permission")
     boolean hasPermission(@RequestBody PermissionDecideDto permissionDecideDto) {
-        String url = permissionDecideDto.getUrl().replaceFirst("/", "");
-        String serviceName = url.substring(0, url.indexOf("/"));
-        String realUrl = url.replaceFirst(serviceName, "");
-        String method = permissionDecideDto.getMethod().toLowerCase(Locale.ROOT);
-        // 如果接口不需要认证直接放行
-        List<Api> apis = apiService.list(new LambdaQueryWrapper<Api>()
-                .eq(Api::getService, serviceName)
-                .eq(Api::getMethod, method)
-                .eq(Api::getUrl, realUrl)
-                .eq(Api::getNeedAuth, 0));
-        if (!CollectionUtils.isEmpty(apis)) {
-            return true;
-        }
-
-        List<String> roles = permissionDecideDto.getRoles();
-        List<Role> roleList = roleService.list(new LambdaQueryWrapper<Role>().in(Role::getRoleName, roles));
-        if (CollectionUtils.isEmpty(roleList)) {
-            return false;
-        }
-        List<RoleMenu> roleMenuList = roleMenuService.list(new LambdaQueryWrapper<RoleMenu>()
-                .in(RoleMenu::getRoleId, roleList.stream().map(Role::getRoleId).collect(Collectors.toSet())));
-        if (CollectionUtils.isEmpty(roleMenuList)) {
-            return false;
-        }
-        List<Menu> menuList = menuService.list(new LambdaQueryWrapper<Menu>()
-                .in(Menu::getMenuId, roleMenuList.stream().map(RoleMenu::getMenuId).collect(Collectors.toSet())));
-        if (CollectionUtils.isEmpty(menuList)) {
-            return false;
-        }
-        List<String> permList = new ArrayList<>();
-        for (Menu menu : menuList) {
-            String[] split = menu.getPerms().split(",");
-            List<String> perms = Arrays.stream(split).collect(Collectors.toList());
-            permList.addAll(perms);
-        }
-        for (String perm : permList) {
-            List<Api> authApiList = apiService.list(new LambdaQueryWrapper<Api>()
-                    .eq(Api::getService, serviceName)
-                    .eq(Api::getMethod, method)
-                    .eq(Api::getUrl, realUrl)
-                    .like(Api::getPerms, perm));
-            if (!CollectionUtils.isEmpty(authApiList)) {
-                return true;
-            }
-        }
-        return false;
+        return userService.isHasPermission(permissionDecideDto);
     }
 
-    private UserVo buildUserVo(User user, List<Role> roles) {
-        UserVo userVo = new UserVo();
-        BeanUtils.copyProperties(user, userVo);
-        userVo.setRoles(roles);
-        return userVo;
-    }
 }

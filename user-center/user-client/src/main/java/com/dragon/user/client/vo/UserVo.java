@@ -16,6 +16,7 @@ public class UserVo {
     private Long userId;
     private String username;
     private String password;
+    private String avatar;
     private String email;
     private String mobile;
     private Integer status;

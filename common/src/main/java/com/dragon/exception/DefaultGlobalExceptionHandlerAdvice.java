@@ -38,9 +38,4 @@ public class DefaultGlobalExceptionHandlerAdvice {
         return Result.fail();
     }
 
-    @ExceptionHandler(value = {Throwable.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result<String> throwable() {
-        return Result.fail();
-    }
 }

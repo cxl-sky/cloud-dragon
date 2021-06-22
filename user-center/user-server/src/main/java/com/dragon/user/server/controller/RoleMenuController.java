@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 import com.dragon.base.BaseController;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -14,7 +15,7 @@ import com.dragon.base.BaseController;
  * @author chenxiaolong
  * @since 2021-06-22
  */
-@Controller
+@RestController
 @RequestMapping("/server/roleMenu")
 public class RoleMenuController extends BaseController {
 

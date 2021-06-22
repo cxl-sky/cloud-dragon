@@ -4,6 +4,7 @@ package com.dragon.user.server.controller;
 import com.dragon.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author chenxiaolong
  * @since 2021-06-21
  */
-@Controller
+@RestController
 @RequestMapping("/server/role")
 public class RoleController extends BaseController {
 

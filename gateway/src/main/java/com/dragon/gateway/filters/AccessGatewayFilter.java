@@ -1,23 +1,36 @@
 package com.dragon.gateway.filters;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dragon.constants.SystemConstant;
+import com.dragon.exception.SystemErrorType;
 import com.dragon.gateway.properties.AuthProperties;
 import com.dragon.resource.client.AuthenticationClient;
+import com.dragon.response.Result;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferFactory;
+import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * 请求url权限校验
@@ -28,6 +41,8 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class AccessGatewayFilter implements GlobalFilter {
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
 
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
@@ -36,6 +51,7 @@ public class AccessGatewayFilter implements GlobalFilter {
 
     @Autowired
     private AuthProperties authProperties;
+
 
     /**
      * 1.首先网关检查token是否有效，无效直接返回401，不调用签权服务
@@ -85,9 +101,18 @@ public class AccessGatewayFilter implements GlobalFilter {
      * @param
      */
     private Mono<Void> unauthorized(ServerWebExchange serverWebExchange) {
-        serverWebExchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-        DataBuffer buffer = serverWebExchange.getResponse()
-                .bufferFactory().wrap(HttpStatus.UNAUTHORIZED.getReasonPhrase().getBytes());
-        return serverWebExchange.getResponse().writeWith(Flux.just(buffer));
+        ServerHttpResponse response = serverWebExchange.getResponse();
+        response.setStatusCode(HttpStatus.UNAUTHORIZED);
+        DataBufferFactory bufferFactory = response.bufferFactory();
+
+        return response.writeWith(Mono.fromSupplier(() -> {
+            try {
+                //返回json异常原因给前端
+                return bufferFactory.wrap(objectMapper.writeValueAsBytes(Result.fail(SystemErrorType.ACCESS_DENIED)));
+            } catch (JsonProcessingException e) {
+                log.warn("Error writing response", e);
+                return bufferFactory.wrap(new byte[0]);
+            }
+        }));
     }
 }
