@@ -47,5 +47,9 @@ public class Api extends BaseEntity {
      */
     private String perms;
 
+    /**
+     * 是否需要权限
+     */
+    private Integer needAuth;
 
 }

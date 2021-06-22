@@ -12,8 +12,8 @@ import java.util.List;
 @Data
 public class MenuVo {
 
-    private Integer menuId;
-    private Integer parentId;
+    private Long menuId;
+    private Long parentId;
     private String url;
     private String code;
     private String component;

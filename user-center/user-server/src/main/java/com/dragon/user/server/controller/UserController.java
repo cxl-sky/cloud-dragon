@@ -49,7 +49,7 @@ public class UserController extends BaseController {
         return Result.success(user);
     }
 
-    @GetMapping("permission/menus")
+    @GetMapping("/permission/menus")
     public Result<List<MenuVo>> permissionMenus() {
         DragonUser user = userUtils.getUser();
         return Result.success(getMenus(user));

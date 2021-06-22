@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -54,6 +55,20 @@ public class UserClientImpl {
 
     @PostMapping("/permission")
     boolean hasPermission(@RequestBody PermissionDecideDto permissionDecideDto) {
+        String url = permissionDecideDto.getUrl().replaceFirst("/", "");
+        String serviceName = url.substring(0, url.indexOf("/"));
+        String realUrl = url.replaceFirst(serviceName, "");
+        String method = permissionDecideDto.getMethod().toLowerCase(Locale.ROOT);
+        // 如果接口不需要认证直接放行
+        List<Api> apis = apiService.list(new LambdaQueryWrapper<Api>()
+                .eq(Api::getService, serviceName)
+                .eq(Api::getMethod, method)
+                .eq(Api::getUrl, realUrl)
+                .eq(Api::getNeedAuth, 0));
+        if (!CollectionUtils.isEmpty(apis)) {
+            return true;
+        }
+
         List<String> roles = permissionDecideDto.getRoles();
         List<Role> roleList = roleService.list(new LambdaQueryWrapper<Role>().in(Role::getRoleName, roles));
         if (CollectionUtils.isEmpty(roleList)) {
@@ -75,12 +90,13 @@ public class UserClientImpl {
             List<String> perms = Arrays.stream(split).collect(Collectors.toList());
             permList.addAll(perms);
         }
-        String url = permissionDecideDto.getUrl().replaceFirst("/", "");
-        String serviceName = url.substring(0, url.indexOf("/"));
-        String realUrl = url.replaceFirst(serviceName, "");
         for (String perm : permList) {
-            List<Api> apis = apiService.list(new LambdaQueryWrapper<Api>().eq(Api::getService, serviceName).eq(Api::getUrl, realUrl).like(Api::getPerms, perm));
-            if (!CollectionUtils.isEmpty(apis)) {
+            List<Api> authApiList = apiService.list(new LambdaQueryWrapper<Api>()
+                    .eq(Api::getService, serviceName)
+                    .eq(Api::getMethod, method)
+                    .eq(Api::getUrl, realUrl)
+                    .like(Api::getPerms, perm));
+            if (!CollectionUtils.isEmpty(authApiList)) {
                 return true;
             }
         }
