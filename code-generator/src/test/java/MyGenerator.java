@@ -28,7 +28,7 @@ public class MyGenerator {
 
         //2、数据源配置
         DataSourceConfig dataSource = new DataSourceConfig();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/user-center?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/user_center?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8");
         dataSource.setDriverName("com.mysql.jdbc.Driver");
         dataSource.setUsername("root");
         dataSource.setPassword("root123");
@@ -48,7 +48,7 @@ public class MyGenerator {
         strategy.setSuperEntityClass("com.dragon.base.BaseEntity");
         strategy.setTablePrefix("sys_"); // 表名前缀
         strategy.setEntityLombokModel(true); //使用lombok
-        strategy.setInclude("sys_user_role","sys_role");  // 逆向工程使用的表   如果要生成多个,这里可以传入String[]
+        strategy.setInclude("sys_role_menu");  // 逆向工程使用的表   如果要生成多个,这里可以传入String[]
         mpg.setStrategy(strategy);
 
 //        ConfigBuilder config = new ConfigBuilder(packageInfo, dataSource, strategy, mpg.getTemplate(), globalConfig);

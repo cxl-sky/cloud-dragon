@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dragon.user.server.mapper.ApiMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dragon.user.client.entity.Api">
+        <id column="id" property="id" />
+        <result column="service" property="service" />
+        <result column="url" property="url" />
+        <result column="method" property="method" />
+        <result column="perms" property="perms" />
+    </resultMap>
+
+</mapper>

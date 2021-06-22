@@ -1,9 +1,12 @@
 package com.dragon.user.client;
 
 import com.dragon.user.client.config.UserClientConfig;
+import com.dragon.user.client.dto.PermissionDecideDto;
 import com.dragon.user.client.vo.UserVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -21,5 +24,12 @@ public interface UserClient {
     @GetMapping("/username")
     UserVo selectUserByUsername(@RequestParam("username") String username);
 
-
+    /**
+     * 判断是否有权限
+     *
+     * @param permissionDecideDto
+     * @return
+     */
+    @PostMapping("/permission")
+    boolean hasPermission(@RequestBody PermissionDecideDto permissionDecideDto);
 }
