@@ -1,13 +1,18 @@
 package com.dragon.user.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dragon.pojo.DragonUser;
 import com.dragon.user.client.dto.PermissionDecideDto;
 import com.dragon.user.client.entity.*;
+import com.dragon.user.client.query.UserPageQuery;
 import com.dragon.user.client.vo.MenuVo;
 import com.dragon.user.client.vo.UserVo;
 import com.dragon.user.server.mapper.*;
 import com.dragon.user.server.service.UserService;
+import com.dragon.utils.UserUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,19 +42,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private RoleMenuMapper roleMenuMapper;
     @Autowired
     private MenuMapper menuMapper;
+    @Autowired
+    private UserUtils userUtils;
 
     @Override
     public UserVo selectUserVoByUsername(String username) {
-        User user = getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
-        if (user == null) {
-            return null;
-        }
-        List<UserRole> userRoles = userRoleMapper.selectList(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getUserId()));
-        List<Role> roles = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(userRoles)) {
-            roles = roleMapper.selectList(new LambdaQueryWrapper<Role>().in(Role::getRoleId, userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toSet())));
-        }
-        return buildUserVo(user, roles);
+        return getUserVo(getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username)));
     }
 
     @Override
@@ -57,7 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String url = permissionDecideDto.getUrl().replaceFirst("/", "");
         String serviceName = url.substring(0, url.indexOf("/"));
         String realUrl = url.replaceFirst(serviceName, "");
-        String method = permissionDecideDto.getMethod().toLowerCase(Locale.ROOT);
+        String method = permissionDecideDto.getMethod().toUpperCase(Locale.ROOT);
         // 如果接口不需要鉴权直接放行
         List<Api> apis = apiMapper.selectList(new LambdaQueryWrapper<Api>()
                 .eq(Api::getService, serviceName)
@@ -137,6 +135,57 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .collect(Collectors.toList());
 
         return buildVo(topMenuVos, allMenuList);
+    }
+
+    @Override
+    public UserVo getCurrentUserInfo() {
+        DragonUser dragonUser = userUtils.getUser();
+        if (dragonUser == null) {
+            return null;
+        }
+        User user = getById(dragonUser.getId());
+        return getUserVo(user);
+    }
+
+    @Override
+    public Page<UserVo> selectPage(UserPageQuery userPageQuery) {
+        Page<User> page = new Page<>(userPageQuery.getPageNum(), userPageQuery.getPageSize());
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.isNotBlank(userPageQuery.getUsernameLike())) {
+            queryWrapper.like(User::getUsername, userPageQuery.getUsernameLike());
+        }
+        if (userPageQuery.getStatus() != null) {
+            queryWrapper.like(User::getStatus, userPageQuery.getStatus());
+        }
+        if (userPageQuery.getRoleId() != null) {
+            List<UserRole> userRoles = userRoleMapper.selectList(new LambdaQueryWrapper<UserRole>().eq(UserRole::getRoleId, userPageQuery.getRoleId()));
+            if (!CollectionUtils.isEmpty(userRoles)) {
+                queryWrapper.in(User::getUserId, userRoles.stream().map(UserRole::getUserId).collect(Collectors.toSet()));
+            }
+        }
+        page = page(page, queryWrapper);
+
+        List<User> records = page.getRecords();
+        List<UserVo> userVos = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(records)) {
+            userVos = records.stream().map(this::getUserVo).collect(Collectors.toList());
+        }
+        Page<UserVo> userVoPage = new Page<>();
+        BeanUtils.copyProperties(page, userVoPage);
+        userVoPage.setRecords(userVos);
+        return userVoPage;
+    }
+
+    private UserVo getUserVo(User user) {
+        if (user == null) {
+            return null;
+        }
+        List<UserRole> userRoles = userRoleMapper.selectList(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getUserId()));
+        List<Role> roles = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(userRoles)) {
+            roles = roleMapper.selectList(new LambdaQueryWrapper<Role>().in(Role::getRoleId, userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toSet())));
+        }
+        return buildUserVo(user, roles);
     }
 
     private List<MenuVo> buildVo(List<MenuVo> topMenuVos, List<MenuVo> allMenus) {

@@ -58,19 +58,19 @@ const actions = {
         const {data} = response
 
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('获取用户信息失败，请重新登录.')
         }
 
-        const {authorities, username, avatar} = data
+        const {roles, username, avatar} = data
 
         // roles must be a non-empty array
-        if (!authorities || authorities.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
+        if (!roles || roles.length <= 0) {
+          reject('角色必须是数组类型!')
         }
 
-        commit('SET_ROLES', authorities)
+        commit('SET_ROLES', roles.map(role=>role.roleName))
         commit('SET_NAME', username)
-        commit('SET_AVATAR', 'https://www.cxlsky.com/images/avatar.png')
+        commit('SET_AVATAR', avatar)
         resolve(data)
       }).catch(error => {
         reject(error)

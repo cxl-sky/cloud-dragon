@@ -1,16 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-      <el-form-item label="接口URL">
-        <el-input v-model="searchForm.urlLike" placeholder="请输入" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="请求方式">
-        <el-select v-model="searchForm.method" placeholder="请选择" clearable>
-          <el-option label="GET" value="get"></el-option>
-          <el-option label="POST" value="post"></el-option>
-          <el-option label="PUT" value="put"></el-option>
-          <el-option label="DELETE" value="delete"></el-option>
-        </el-select>
+      <el-form-item label="角色名称">
+        <el-input v-model="searchForm.roleNameLike" placeholder="请输入" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -37,24 +29,14 @@
             {{ scope.$index + 1 }}
           </template>
         </el-table-column>
-        <el-table-column label="服务名">
+        <el-table-column label="角色名称" align="center">
           <template slot-scope="scope">
-            {{ scope.row.service }}
+            {{ scope.row.roleName }}
           </template>
         </el-table-column>
-        <el-table-column label="接口URL" align="left">
+        <el-table-column label="备注" align="center">
           <template slot-scope="scope">
-            <span>{{ scope.row.url }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="请求方式" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.method }}
-          </template>
-        </el-table-column>
-        <el-table-column label="是否需要鉴权" align="center">
-          <template slot-scope="scope">
-            <el-tag :type="scope.row.needAuth | statusFilter">{{ scope.row.needAuth === 1 ? '是' : '否' }}</el-tag>
+            {{ scope.row.remark }}
           </template>
         </el-table-column>
         <!--        <el-table-column align="center" prop="created_at" label="Display_time" width="200">-->
@@ -82,18 +64,10 @@
 </template>
 
 <script>
-import {apiPage} from '@/api/api'
+import {rolePage} from "@/api/role";
 
 export default {
-  filters: {
-    statusFilter(needAuth) {
-      const statusMap = {
-        0: 'success',
-        1: 'danger'
-      }
-      return statusMap[needAuth]
-    }
-  },
+  filters: {},
   data() {
     return {
       records: null,
@@ -102,13 +76,14 @@ export default {
       total: 0,
       listLoading: true,
       searchForm: {
-        method: '',
-        urlLike: ''
+        roleNameLike: ''
       }
     }
   },
   created() {
     this.fetchData()
+  },
+  mounted() {
   },
   methods: {
     fetchData() {
@@ -118,7 +93,7 @@ export default {
         pageSize: this.pageSize,
         ...this.searchForm
       }
-      apiPage(param).then(({data}) => {
+      rolePage(param).then(({data}) => {
         this.records = data.records
         this.total = data.total
         this.listLoading = false
@@ -139,5 +114,12 @@ export default {
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+.user-avatar {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
 }
 </style>

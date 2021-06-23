@@ -2,11 +2,11 @@ package com.dragon.user.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dragon.user.client.entity.Api;
 import com.dragon.user.client.query.ApiPageQuery;
 import com.dragon.user.server.mapper.ApiMapper;
 import com.dragon.user.server.service.ApiService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class ApiServiceImpl extends ServiceImpl<ApiMapper, Api> implements ApiSe
             queryWrapper.like(Api::getUrl, apiPageQuery.getUrlLike());
         }
         if (StringUtils.isNotBlank(apiPageQuery.getMethod())) {
-            queryWrapper.eq(Api::getMethod, apiPageQuery.getMethod().toLowerCase(Locale.ROOT));
+            queryWrapper.eq(Api::getMethod, apiPageQuery.getMethod().toUpperCase(Locale.ROOT));
         }
         return page(page, queryWrapper);
     }

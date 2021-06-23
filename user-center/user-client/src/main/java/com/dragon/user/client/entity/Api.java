@@ -1,8 +1,8 @@
 package com.dragon.user.client.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.dragon.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

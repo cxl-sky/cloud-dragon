@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-06-22
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/apis")
 public class ApiController extends BaseController {
 
     @Autowired

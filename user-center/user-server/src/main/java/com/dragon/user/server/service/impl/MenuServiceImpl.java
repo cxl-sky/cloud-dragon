@@ -1,9 +1,9 @@
 package com.dragon.user.server.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dragon.user.client.entity.Menu;
 import com.dragon.user.server.mapper.MenuMapper;
 import com.dragon.user.server.service.MenuService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

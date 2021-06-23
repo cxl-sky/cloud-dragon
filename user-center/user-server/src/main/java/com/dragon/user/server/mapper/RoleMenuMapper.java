@@ -1,7 +1,7 @@
 package com.dragon.user.server.mapper;
 
-import com.dragon.user.client.entity.RoleMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dragon.user.client.entity.RoleMenu;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

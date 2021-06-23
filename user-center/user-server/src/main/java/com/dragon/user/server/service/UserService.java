@@ -1,8 +1,10 @@
 package com.dragon.user.server.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dragon.user.client.dto.PermissionDecideDto;
 import com.dragon.user.client.entity.User;
+import com.dragon.user.client.query.UserPageQuery;
 import com.dragon.user.client.vo.MenuVo;
 import com.dragon.user.client.vo.UserVo;
 
@@ -39,4 +41,17 @@ public interface UserService extends IService<User> {
      * @return
      */
     List<MenuVo> getPermissionMenus(Set<String> authorities);
+
+    /**
+     * 获取当前登录用户信息
+     * @return
+     */
+    UserVo getCurrentUserInfo();
+
+    /**
+     * 分页
+     * @param userPageQuery
+     * @return
+     */
+    Page<UserVo> selectPage(UserPageQuery userPageQuery);
 }

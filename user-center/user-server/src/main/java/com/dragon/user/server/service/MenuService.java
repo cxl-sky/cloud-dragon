@@ -1,7 +1,7 @@
 package com.dragon.user.server.service;
 
-import com.dragon.user.client.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dragon.user.client.entity.Menu;
 
 /**
  * <p>

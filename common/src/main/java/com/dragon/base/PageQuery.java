@@ -1,6 +1,5 @@
 package com.dragon.base;
 
-import lombok.Data;
 import lombok.Setter;
 
 /**

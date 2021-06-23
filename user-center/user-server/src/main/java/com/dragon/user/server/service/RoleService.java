@@ -1,7 +1,9 @@
 package com.dragon.user.server.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dragon.user.client.entity.Role;
+import com.dragon.user.client.query.RolePageQuery;
 
 /**
  * <p>
@@ -13,4 +15,10 @@ import com.dragon.user.client.entity.Role;
  */
 public interface RoleService extends IService<Role> {
 
+    /**
+     * 分页
+     * @param rolePageQuery
+     * @return
+     */
+    Page<Role> selectPage(RolePageQuery rolePageQuery);
 }

@@ -28,3 +28,11 @@ export function fetchUserMenuList() {
     method: 'get'
   })
 }
+
+export function userPage(data) {
+  return request({
+    url: '/user-server/users/page',
+    method: 'get',
+    params: data
+  })
+}

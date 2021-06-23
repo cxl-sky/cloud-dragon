@@ -1,6 +1,5 @@
 package com.dragon.gateway.exception;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dragon.exception.DefaultGlobalExceptionHandlerAdvice;
 import com.dragon.exception.SystemErrorType;
 import com.dragon.response.Result;

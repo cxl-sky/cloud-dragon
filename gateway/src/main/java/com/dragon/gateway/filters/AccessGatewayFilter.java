@@ -1,6 +1,5 @@
 package com.dragon.gateway.filters;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dragon.constants.SystemConstant;
 import com.dragon.exception.SystemErrorType;
 import com.dragon.gateway.properties.AuthProperties;
@@ -10,27 +9,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
-import org.springframework.core.io.buffer.DataBufferUtils;
-import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 /**
  * 请求url权限校验
@@ -65,7 +58,7 @@ public class AccessGatewayFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String authentication = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-        String method = request.getMethodValue();
+        String method = request.getMethodValue().toUpperCase(Locale.ROOT);
         String url = request.getPath().value();
         log.debug("url:{},method:{},headers:{}", url, method, request.getHeaders());
         // 未开启验证则全部放行
