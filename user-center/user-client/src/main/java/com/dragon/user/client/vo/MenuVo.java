@@ -14,14 +14,15 @@ public class MenuVo {
 
     private Long menuId;
     private Long parentId;
-    private String url;
+    private String title;
     private String code;
+    private String url;
     private String component;
     private Integer status;
+    private String perms;
+    private Integer type;
     private String redirect;
-    private String title;
     private String icon;
     private Integer orderNum;
     private List<MenuVo> children;
-
 }

@@ -102,42 +102,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public List<MenuVo> getPermissionMenus(Set<String> roles) {
-        List<Role> roleList = roleMapper.selectList(new LambdaQueryWrapper<Role>().in(Role::getRoleName, roles));
-        if (CollectionUtils.isEmpty(roleList)) {
-            return new ArrayList<>();
-        }
-        List<RoleMenu> roleMenuList = roleMenuMapper.selectList(new LambdaQueryWrapper<RoleMenu>()
-                .in(RoleMenu::getRoleId, roleList.stream().map(Role::getRoleId).collect(Collectors.toSet())));
-        if (CollectionUtils.isEmpty(roleMenuList)) {
-            return new ArrayList<>();
-        }
-        List<Menu> menuList = menuMapper.selectList(new LambdaQueryWrapper<Menu>()
-                .in(Menu::getMenuId, roleMenuList.stream().map(RoleMenu::getMenuId).collect(Collectors.toSet())));
-        if (CollectionUtils.isEmpty(menuList)) {
-            return new ArrayList<>();
-        }
-
-        List<MenuVo> allMenuList = menuList.stream().map(m -> {
-            MenuVo menuVo = new MenuVo();
-            BeanUtils.copyProperties(m, menuVo);
-            return menuVo;
-        }).collect(Collectors.toList());
-
-        List<MenuVo> topMenuVos = menuList.stream()
-                .filter(m -> m.getParentId() == null || m.getParentId() == 0)
-                .map(m -> {
-                    MenuVo menuVo = new MenuVo();
-                    BeanUtils.copyProperties(m, menuVo);
-                    return menuVo;
-                })
-                .sorted(Comparator.comparing(MenuVo::getOrderNum))
-                .collect(Collectors.toList());
-
-        return buildVo(topMenuVos, allMenuList);
-    }
-
-    @Override
     public UserVo getCurrentUserInfo() {
         DragonUser dragonUser = userUtils.getUser();
         if (dragonUser == null) {
@@ -186,18 +150,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             roles = roleMapper.selectList(new LambdaQueryWrapper<Role>().in(Role::getRoleId, userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toSet())));
         }
         return buildUserVo(user, roles);
-    }
-
-    private List<MenuVo> buildVo(List<MenuVo> topMenuVos, List<MenuVo> allMenus) {
-        for (MenuVo menuVo : topMenuVos) {
-            List<MenuVo> childrenMenus = allMenus.stream().filter(menu -> menu.getParentId() != null && menu.getParentId().equals(menuVo.getMenuId()))
-                    .sorted(Comparator.comparing(MenuVo::getOrderNum)).collect(Collectors.toList());
-            if (!CollectionUtils.isEmpty(childrenMenus)) {
-                menuVo.setChildren(childrenMenus);
-                buildVo(childrenMenus, allMenus);
-            }
-        }
-        return topMenuVos;
     }
 
     private UserVo buildUserVo(User user, List<Role> roles) {

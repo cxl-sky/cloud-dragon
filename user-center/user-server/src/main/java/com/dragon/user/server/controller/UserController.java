@@ -26,8 +26,6 @@ import java.util.List;
 public class UserController extends BaseController {
 
     @Autowired
-    private UserUtils userUtils;
-    @Autowired
     private UserService userService;
 
     @GetMapping("/page")
@@ -41,13 +39,5 @@ public class UserController extends BaseController {
         UserVo userVo = userService.getCurrentUserInfo();
         return Result.success(userVo);
     }
-
-    @GetMapping("/permission/menus")
-    public Result<List<MenuVo>> permissionMenus() {
-        DragonUser user = userUtils.getUser();
-        List<MenuVo> menuVos = userService.getPermissionMenus(user.getAuthorities());
-        return Result.success(menuVos);
-    }
-
 
 }

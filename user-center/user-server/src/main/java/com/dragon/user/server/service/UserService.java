@@ -36,13 +36,6 @@ public interface UserService extends IService<User> {
     boolean isHasPermission(PermissionDecideDto permissionDecideDto);
 
     /**
-     * 获取权限菜单
-     * @param authorities
-     * @return
-     */
-    List<MenuVo> getPermissionMenus(Set<String> authorities);
-
-    /**
      * 获取当前登录用户信息
      * @return
      */

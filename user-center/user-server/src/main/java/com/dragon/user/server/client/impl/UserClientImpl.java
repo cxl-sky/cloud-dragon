@@ -3,6 +3,7 @@ package com.dragon.user.server.client.impl;
 import com.dragon.user.client.config.UserClientConfig;
 import com.dragon.user.client.dto.PermissionDecideDto;
 import com.dragon.user.client.vo.UserVo;
+import com.dragon.user.server.service.MenuService;
 import com.dragon.user.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

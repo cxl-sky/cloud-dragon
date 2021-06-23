@@ -1,5 +1,5 @@
 import { asyncRoutes, constantRoutes } from '@/router'
-import { fetchUserMenuList } from '@/api/user'
+import { fetchUserMenuList } from '@/api/menu'
 import Layout from '@/layout'
 
 /**
