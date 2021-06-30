@@ -120,6 +120,37 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 | code-generate         | ✅  |    代码生成中心，快速生成前后端代码（逐步完善中） |  http://localhost:10086  | 待完善    |
 |未完待续                | ... |                    ...        | ...                      | ...      |
 
+
+## 项目功能预览
+### **登录页面**
+<img src="docs/imgs/login.jpg" width="300px" syt height="300px" />
+
+
+### **用户管理**
+<img src="docs/imgs/user.jpg" width="300px" syt height="300px" />
+
+
+### **角色管理**
+<img src="docs/imgs/role.jpg" width="300px" syt height="300px" />
+
+
+### **菜單管理**
+<img src="docs/imgs/menu.jpg" width="300px" syt height="300px" />
+
+
+### **接口管理**
+<img src="docs/imgs/api.jpg" width="300px" syt height="300px" />
+
+
+### **注冊中心**
+<img src="docs/imgs/nacos.jpg" width="300px" syt height="300px" />
+
+
+### **文件上传**
+<img src="docs/imgs/minio.jpg" width="300px" syt height="300px" />
+
+**待续**
+
 ## 联系交流
 
 ### 加入贡献代码

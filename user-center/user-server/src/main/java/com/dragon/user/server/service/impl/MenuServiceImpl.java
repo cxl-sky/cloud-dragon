@@ -35,6 +35,7 @@ import java.util.stream.Collectors;
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
+    private static final String ADMIN_ROLE = "admin";
     @Autowired
     private RoleMapper roleMapper;
     @Autowired
@@ -72,17 +73,22 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<MenuVo> getPermissionMenus(Set<String> roles) {
-        List<Role> roleList = roleMapper.selectList(new LambdaQueryWrapper<Role>().in(Role::getRoleName, roles));
-        if (CollectionUtils.isEmpty(roleList)) {
-            return new ArrayList<>();
+        List<Menu> menuList;
+        if (roles.contains(ADMIN_ROLE)) {
+            menuList = list();
+        } else {
+            List<Role> roleList = roleMapper.selectList(new LambdaQueryWrapper<Role>().in(Role::getRoleName, roles));
+            if (CollectionUtils.isEmpty(roleList)) {
+                return new ArrayList<>();
+            }
+            List<RoleMenu> roleMenuList = roleMenuMapper.selectList(new LambdaQueryWrapper<RoleMenu>()
+                    .in(RoleMenu::getRoleId, roleList.stream().map(Role::getRoleId).collect(Collectors.toSet())));
+            if (CollectionUtils.isEmpty(roleMenuList)) {
+                return new ArrayList<>();
+            }
+            menuList = menuMapper.selectList(new LambdaQueryWrapper<Menu>()
+                    .in(Menu::getMenuId, roleMenuList.stream().map(RoleMenu::getMenuId).collect(Collectors.toSet())));
         }
-        List<RoleMenu> roleMenuList = roleMenuMapper.selectList(new LambdaQueryWrapper<RoleMenu>()
-                .in(RoleMenu::getRoleId, roleList.stream().map(Role::getRoleId).collect(Collectors.toSet())));
-        if (CollectionUtils.isEmpty(roleMenuList)) {
-            return new ArrayList<>();
-        }
-        List<Menu> menuList = menuMapper.selectList(new LambdaQueryWrapper<Menu>()
-                .in(Menu::getMenuId, roleMenuList.stream().map(RoleMenu::getMenuId).collect(Collectors.toSet())));
         if (CollectionUtils.isEmpty(menuList)) {
             return new ArrayList<>();
         }

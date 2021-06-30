@@ -1,23 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-      <el-form-item label="菜单名称">
-        <el-input v-model="searchForm.titleLike" placeholder="请输入" clearable></el-input>
+      <el-form-item label="用户名">
+        <el-input v-model="searchForm.usernameLike" placeholder="请输入" clearable></el-input>
       </el-form-item>
-      <el-form-item label="菜单权限">
-        <el-input v-model="searchForm.permsLike" placeholder="请输入" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="菜单类型">
-        <el-select v-model="searchForm.type" placeholder="请选择" clearable>
-          <el-option label="目录" :value="0"></el-option>
-          <el-option label="菜单" :value="1"></el-option>
-          <el-option label="按钮" :value="2"></el-option>
+      <el-form-item label="用户状态">
+        <el-select v-model="searchForm.status" placeholder="请选择" clearable>
+          <el-option label="启用" :value="1"></el-option>
+          <el-option label="禁用" :value="0"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="菜单状态">
-        <el-select v-model="searchForm.status" placeholder="请选择" clearable>
-          <el-option label="隐藏" :value="0"></el-option>
-          <el-option label="显示" :value="1"></el-option>
+      <el-form-item label="用户角色">
+        <el-select v-model="searchForm.roleId" placeholder="请选择" clearable>
+          <el-option v-for="role in roleList" :key="role.roleId"
+                     :label="role.roleName" :value="role.roleId"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -34,58 +30,35 @@
         border
         fit
         highlight-current-row
-        row-key="menuId"
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       >
         <el-table-column
           align="center"
           type="selection"
           width="55">
         </el-table-column>
-        <el-table-column align="center" label="菜单id" width="95">
+        <el-table-column align="center" label="序号" width="95">
           <template slot-scope="scope">
-            {{ scope.row.menuId }}
+            {{ scope.$index + 1 }}
           </template>
         </el-table-column>
-        <el-table-column label="菜单名称">
+        <el-table-column label="用户名" align="center">
           <template slot-scope="scope">
-            {{ scope.row.title }}
+            {{ scope.row.username }}
           </template>
         </el-table-column>
-        <el-table-column label="前端组件" align="left">
+        <el-table-column label="头像" align="center">
           <template slot-scope="scope">
-            <span>{{ scope.row.component }}</span>
+            <img :src="scope.row.avatar" class="user-avatar">
           </template>
         </el-table-column>
-        <el-table-column label="菜单路由" align="center">
+        <el-table-column label="用户角色" align="center">
           <template slot-scope="scope">
-            {{ scope.row.url }}
+            {{ roleNameShow(scope.row.roles) }}
           </template>
         </el-table-column>
-        <el-table-column label="菜单代码" align="center">
+        <el-table-column label="用户状态" align="center">
           <template slot-scope="scope">
-            {{ scope.row.code }}
-          </template>
-        </el-table-column>
-        <el-table-column label="菜单权限" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.perms }}
-          </template>
-        </el-table-column>
-        <el-table-column label="菜单图标" align="center">
-          <template slot-scope="scope" v-if="scope.row.icon">
-            <i v-if="scope.row.icon.includes('el-icon')" :class="scope.row.icon" />
-            <svg-icon v-else :icon-class="scope.row.icon" />
-          </template>
-        </el-table-column>
-        <el-table-column label="菜单状态" align="center">
-          <template slot-scope="scope">
-            <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status === 1 ? '显示' : '隐藏' }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="菜单顺序" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.orderNum }}
+            <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status === 1 ? '启用' : '禁用' }}</el-tag>
           </template>
         </el-table-column>
         <!--        <el-table-column align="center" prop="created_at" label="Display_time" width="200">-->
@@ -113,7 +86,8 @@
 </template>
 
 <script>
-import {menuPage} from "@/api/menu";
+import {userPage} from "@/api/user";
+import {rolePage} from "@/api/role";
 
 export default {
   filters: {
@@ -133,17 +107,23 @@ export default {
       total: 0,
       listLoading: true,
       searchForm: {
-        titleLike: '',
-        permsLike: '',
-        type: '',
+        usernameLike: '',
         status: '',
-      }
+        roleId: ''
+      },
+      roleList: []
     }
   },
   created() {
     this.fetchData()
   },
+  mounted() {
+    this.getRoles()
+  },
   methods: {
+    roleNameShow(roles) {
+      return roles.map(role => role.roleName).join(",")
+    },
     fetchData() {
       this.listLoading = true
       let param = {
@@ -151,12 +131,18 @@ export default {
         pageSize: this.pageSize,
         ...this.searchForm
       }
-      menuPage(param).then(({data}) => {
+      userPage(param).then(({data}) => {
         this.records = data.records
         this.total = data.total
         this.listLoading = false
       }).catch(() => {
         this.listLoading = false
+      })
+    },
+    getRoles() {
+      let param = {pageNum: 1, pageSize: 99999}
+      rolePage(param).then(({data}) => {
+        this.roleList = data.records
       })
     },
     onSubmit() {
@@ -172,5 +158,12 @@ export default {
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+.user-avatar {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
 }
 </style>

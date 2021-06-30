@@ -109,29 +109,33 @@ docker-compose-3-nacos.yml 这个文件主要为了启动 nacos 注册中心和�
 
 
 ### 项目功能预览
-**登录页面**
-> 待完善
+### **登录页面**
+<img src="login.jpg" width="300px" syt height="300px" />
 
-**用户管理**
-> 待完善
 
-**角色管理**
-> 待完善
+### **用户管理**
+<img src="user.jpg" width="300px" syt height="300px" />
 
-**权限管理**
-> 待完善
 
-**部门管理**
-> 待完善
+### **角色管理**
+<img src="role.jpg" width="300px" syt height="300px" />
 
-**API文档**
-> 待完善
 
-**文件上传**
-> 待完善
+### **菜單管理**
+<img src="menu.jpg" width="300px" syt height="300px" />
 
-**代码生成**
-> 待完善
+
+### **接口管理**
+<img src="api.jpg" width="300px" syt height="300px" />
+
+
+### **注冊中心**
+<img src="nacos.jpg" width="300px" syt height="300px" />
+
+
+### **文件上传**
+<img src="minio.jpg" width="300px" syt height="300px" />
+
 
 
 ## 联系交流

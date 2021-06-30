@@ -1,15 +1,23 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-      <el-form-item label="接口URL">
-        <el-input v-model="searchForm.urlLike" placeholder="请输入" clearable></el-input>
+      <el-form-item label="菜单名称">
+        <el-input v-model="searchForm.titleLike" placeholder="请输入" clearable></el-input>
       </el-form-item>
-      <el-form-item label="请求方式">
-        <el-select v-model="searchForm.method" placeholder="请选择" clearable>
-          <el-option label="GET" value="get"></el-option>
-          <el-option label="POST" value="post"></el-option>
-          <el-option label="PUT" value="put"></el-option>
-          <el-option label="DELETE" value="delete"></el-option>
+      <el-form-item label="菜单权限">
+        <el-input v-model="searchForm.permsLike" placeholder="请输入" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="菜单类型">
+        <el-select v-model="searchForm.type" placeholder="请选择" clearable>
+          <el-option label="目录" :value="0"></el-option>
+          <el-option label="菜单" :value="1"></el-option>
+          <el-option label="按钮" :value="2"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="菜单状态">
+        <el-select v-model="searchForm.status" placeholder="请选择" clearable>
+          <el-option label="隐藏" :value="0"></el-option>
+          <el-option label="显示" :value="1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -26,35 +34,58 @@
         border
         fit
         highlight-current-row
+        row-key="menuId"
+        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       >
         <el-table-column
           align="center"
           type="selection"
           width="55">
         </el-table-column>
-        <el-table-column align="center" label="序号" width="95">
+<!--        <el-table-column align="center" label="菜单id" width="95">-->
+<!--          <template slot-scope="scope">-->
+<!--            {{ scope.row.menuId }}-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+        <el-table-column label="菜单名称" align="left">
           <template slot-scope="scope">
-            {{ scope.$index + 1 }}
+            {{ scope.row.title }}
           </template>
         </el-table-column>
-        <el-table-column label="服务名">
+        <el-table-column label="前端组件" align="left">
           <template slot-scope="scope">
-            {{ scope.row.service }}
+            <span>{{ scope.row.component }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="接口URL" align="left">
+        <el-table-column label="菜单路由" align="center">
           <template slot-scope="scope">
-            <span>{{ scope.row.url }}</span>
+            {{ scope.row.url }}
           </template>
         </el-table-column>
-        <el-table-column label="请求方式" align="center">
+        <el-table-column label="菜单代码" align="center">
           <template slot-scope="scope">
-            {{ scope.row.method }}
+            {{ scope.row.code }}
           </template>
         </el-table-column>
-        <el-table-column label="是否需要鉴权" align="center">
+        <el-table-column label="菜单权限" align="center">
           <template slot-scope="scope">
-            <el-tag :type="scope.row.needAuth | statusFilter">{{ scope.row.needAuth === 1 ? '是' : '否' }}</el-tag>
+            {{ scope.row.perms }}
+          </template>
+        </el-table-column>
+        <el-table-column label="菜单图标" align="center">
+          <template slot-scope="scope" v-if="scope.row.icon">
+            <i v-if="scope.row.icon.includes('el-icon')" :class="scope.row.icon" />
+            <svg-icon v-else :icon-class="scope.row.icon" />
+          </template>
+        </el-table-column>
+        <el-table-column label="菜单状态" align="center">
+          <template slot-scope="scope">
+            <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status === 1 ? '显示' : '隐藏' }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="菜单顺序" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.orderNum }}
           </template>
         </el-table-column>
         <!--        <el-table-column align="center" prop="created_at" label="Display_time" width="200">-->
@@ -82,14 +113,14 @@
 </template>
 
 <script>
-import {apiPage} from "@/api/api";
+import {menuPage} from "@/api/menu";
 
 export default {
   filters: {
     statusFilter(needAuth) {
       const statusMap = {
-        0: 'success',
-        1: 'danger'
+        1: 'success',
+        0: 'danger'
       }
       return statusMap[needAuth]
     }
@@ -102,8 +133,10 @@ export default {
       total: 0,
       listLoading: true,
       searchForm: {
-        method: '',
-        urlLike: ''
+        titleLike: '',
+        permsLike: '',
+        type: '',
+        status: '',
       }
     }
   },
@@ -118,7 +151,7 @@ export default {
         pageSize: this.pageSize,
         ...this.searchForm
       }
-      apiPage(param).then(({data}) => {
+      menuPage(param).then(({data}) => {
         this.records = data.records
         this.total = data.total
         this.listLoading = false

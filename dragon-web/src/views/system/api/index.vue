@@ -1,19 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-      <el-form-item label="用户名">
-        <el-input v-model="searchForm.usernameLike" placeholder="请输入" clearable></el-input>
+      <el-form-item label="接口URL">
+        <el-input v-model="searchForm.urlLike" placeholder="请输入" clearable></el-input>
       </el-form-item>
-      <el-form-item label="用户状态">
-        <el-select v-model="searchForm.status" placeholder="请选择" clearable>
-          <el-option label="启用" :value="1"></el-option>
-          <el-option label="禁用" :value="0"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="用户角色">
-        <el-select v-model="searchForm.roleId" placeholder="请选择" clearable>
-          <el-option v-for="role in roleList" :key="role.roleId"
-                     :label="role.roleName" :value="role.roleId"></el-option>
+      <el-form-item label="请求方式">
+        <el-select v-model="searchForm.method" placeholder="请选择" clearable>
+          <el-option label="GET" value="get"></el-option>
+          <el-option label="POST" value="post"></el-option>
+          <el-option label="PUT" value="put"></el-option>
+          <el-option label="DELETE" value="delete"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -41,24 +37,29 @@
             {{ scope.$index + 1 }}
           </template>
         </el-table-column>
-        <el-table-column label="用户名" align="center">
+        <el-table-column label="服务名">
           <template slot-scope="scope">
-            {{ scope.row.username }}
+            {{ scope.row.service }}
           </template>
         </el-table-column>
-        <el-table-column label="头像" align="center">
+        <el-table-column label="接口URL" align="left">
           <template slot-scope="scope">
-            <img :src="scope.row.avatar" class="user-avatar">
+            <span>{{ scope.row.url }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="用户角色" align="center">
+        <el-table-column label="请求方式" align="center">
           <template slot-scope="scope">
-            {{ roleNameShow(scope.row.roles) }}
+            {{ scope.row.method }}
           </template>
         </el-table-column>
-        <el-table-column label="用户状态" align="center">
+        <el-table-column label="接口权限" align="center">
           <template slot-scope="scope">
-            <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status === 1 ? '启用' : '禁用' }}</el-tag>
+            {{ scope.row.perms }}
+          </template>
+        </el-table-column>
+        <el-table-column label="是否需要鉴权" align="center">
+          <template slot-scope="scope">
+            <el-tag :type="scope.row.needAuth | statusFilter">{{ scope.row.needAuth === 1 ? '是' : '否' }}</el-tag>
           </template>
         </el-table-column>
         <!--        <el-table-column align="center" prop="created_at" label="Display_time" width="200">-->
@@ -86,15 +87,14 @@
 </template>
 
 <script>
-import {userPage} from "@/api/user";
-import {rolePage} from "@/api/role";
+import {apiPage} from "@/api/api";
 
 export default {
   filters: {
     statusFilter(needAuth) {
       const statusMap = {
-        1: 'success',
-        0: 'danger'
+        0: 'success',
+        1: 'danger'
       }
       return statusMap[needAuth]
     }
@@ -107,22 +107,15 @@ export default {
       total: 0,
       listLoading: true,
       searchForm: {
-        usernameLike: '',
-        status: '',
-        roleId: ''
+        method: '',
+        urlLike: ''
       }
     }
   },
   created() {
     this.fetchData()
   },
-  mounted() {
-    this.getRoles()
-  },
   methods: {
-    roleNameShow(roles) {
-      return roles.map(role => role.roleName).join(",")
-    },
     fetchData() {
       this.listLoading = true
       let param = {
@@ -130,18 +123,12 @@ export default {
         pageSize: this.pageSize,
         ...this.searchForm
       }
-      userPage(param).then(({data}) => {
+      apiPage(param).then(({data}) => {
         this.records = data.records
         this.total = data.total
         this.listLoading = false
       }).catch(() => {
         this.listLoading = false
-      })
-    },
-    getRoles() {
-      let param = {pageNum: 1, pageSize: 99999}
-      rolePage(param).then(({data}) => {
-        this.roleList = data.records
       })
     },
     onSubmit() {
@@ -157,12 +144,5 @@ export default {
   &:last-child {
     margin-bottom: 0;
   }
-}
-
-.user-avatar {
-  cursor: pointer;
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
 }
 </style>

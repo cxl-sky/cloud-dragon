@@ -6,7 +6,9 @@ services:
     networks:
       - dragon-net
     ports:
-      - 18888:80
+      - 18888:18888
+    volumes:
+      - ../config/nginx.conf:/etc/nginx/nginx.conf
     restart: always
 
   gateway:
@@ -17,7 +19,7 @@ services:
     networks:
       - dragon-net
     ports:
-      - 10082:8080
+      - 10081:10081
     restart: always
 
   auth-server:
@@ -32,6 +34,15 @@ services:
   resource-server:
     container_name: dragon-resource-server
     image: 970863783/resource-server:latest
+    env_file:
+      - ../env/application.env
+    networks:
+      - dragon-net
+    restart: always
+
+  user-server:
+    container_name: dragon-user-server
+    image: 970863783/user-server:latest
     env_file:
       - ../env/application.env
     networks:

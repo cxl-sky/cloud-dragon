@@ -1,9 +1,12 @@
 <template>
-  <section class="app-main">
-    <transition name="fade-transform" mode="out-in">
-      <router-view :key="key" />
-    </transition>
-  </section>
+  <div>
+    <section :class="{'fixed-header':fixedHeader}"/>
+    <section class="app-main">
+      <transition name="fade-transform" mode="out-in">
+        <router-view :key="key"/>
+      </transition>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -12,7 +15,10 @@ export default {
   computed: {
     key() {
       return this.$route.path
-    }
+    },
+    fixedHeader() {
+      return this.$store.state.settings.fixedHeader
+    },
   }
 }
 </script>
@@ -25,8 +31,10 @@ export default {
   position: relative;
   overflow: hidden;
 }
-.fixed-header+.app-main {
-  padding-top: 50px;
+
+.fixed-header {
+  height: 50px;
+  width: 100%;
 }
 </style>
 
