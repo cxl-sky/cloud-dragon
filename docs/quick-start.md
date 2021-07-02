@@ -1,6 +1,8 @@
 <p align="center">
-        <img src="logo.png" width="50px" syt height="50px" />
-        <strong>云龙  Cloud Dragon</strong>
+        <img src="https://oss.gagajiankang.com/cloud/logo.png" width="40px" syt height="40px" />
+</p>
+<p align="center">
+        <strong>云龙 Cloud Dragon</strong>
 </p>
 <p align="center">
 	<strong>适合于企业级别的微服务开发脚手架，功能齐全，开箱即用，部署快捷</strong>
@@ -75,7 +77,7 @@
 |  日志分析工具    |   kibana        |  5601     |  共用    |
 |  数据可视化工具  |   grafana       |  3000     |  共用    |
 
-docker-compose-1-base.yml 这个文件中放了 redis、mysql、rabbitmq 这三个服务 ，可以使用 `docker-compose -f docker-compose-1-base.yml up` 一键启动，也可以使用 `docker-compose -f docker-compose-1-base.yml up -d 服务名` 启动其中某一个服务。
+docker-compose-1-base.yml 这个文件中放了 redis、mysql、rabbitmq、minio 这四个服务 ，可以使用 `docker-compose -f docker-compose-1-base.yml up` 一键启动，也可以使用 `docker-compose -f docker-compose-1-base.yml up -d 服务名` 启动其中某一个服务。
 
 以上步骤执行完后，基础环境就创建好了，接下来需要初始化脚本并启动nacos。
 
@@ -102,7 +104,7 @@ docker-compose-3-nacos.yml 这个文件主要为了启动 nacos 注册中心和�
 | user-center               |                         |  用户中心，权限角色管理等        |  开发调试 http://localhost:10084，正式发布后不暴露端口，通过网关转发  | 待完善    |
 | upload-center             |                         |  文件上传中心                  |  开发调试 http://localhost:10085，正式发布后不暴露端口，通过网关转发  | 待完善    |
 | code-generate-center      |                         |  代码生成中心，快速生成前后端代码  |  开发调试 http://localhost:10086，正式发布后不暴露端口，通过网关转发  | 待完善    |
-| dragon-web                |                         |  前端项目                     |  http://localhost:18888  | 待完善    |
+| dragon-web                | nacos、kibana、minio     |  前端项目                     |  http://localhost:18888  | 待完善    |
 到对应的项目目录下执行 `mvn clean package && docker build`，会将 jar 包打成一个 docker 镜像。
 
 运行 `docker-compose -f docker-compose-6-application up` 即可一键启动所有的项目。
@@ -110,31 +112,33 @@ docker-compose-3-nacos.yml 这个文件主要为了启动 nacos 注册中心和�
 
 ### 项目功能预览
 ### **登录页面**
-<img src="login.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/login.jpg" width="576px" syt height="324px" />
 
 
 ### **用户管理**
-<img src="user.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/user.jpg" width="576px" syt height="324px" />
 
 
 ### **角色管理**
-<img src="role.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/role.jpg" width="576px" syt height="324px" />
 
 
 ### **菜單管理**
-<img src="menu.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/menu.jpg" width="576px" syt height="324px" />
 
 
 ### **接口管理**
-<img src="api.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/api.jpg" width="576px" syt height="324px" />
 
 
 ### **注冊中心**
-<img src="nacos.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/nacos.jpg" width="576px" syt height="324px" />
 
 
 ### **文件上传**
-<img src="minio.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/minio.jpg" width="576px" syt height="324px" />
+
+**更多预览图，尽请期待**
 
 
 

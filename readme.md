@@ -1,5 +1,7 @@
 <p align="center">
-        <img src="docs/logo.png" width="50px" syt height="50px" />
+        <img src="https://oss.gagajiankang.com/cloud/logo.png" width="40px" syt height="40px" />
+</p>
+<p align="center">
         <strong>云龙 Cloud Dragon</strong>
 </p>
 <p align="center">
@@ -123,33 +125,33 @@ Cloud Dragon 使用 Oauth2 进行认证授权管理，采用 JWT + Redis 的方�
 
 ## 项目功能预览
 ### **登录页面**
-<img src="docs/imgs/login.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/login.jpg" width="576px" syt height="324px" />
 
 
 ### **用户管理**
-<img src="docs/imgs/user.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/user.jpg" width="576px" syt height="324px" />
 
 
 ### **角色管理**
-<img src="docs/imgs/role.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/role.jpg" width="576px" syt height="324px" />
 
 
 ### **菜單管理**
-<img src="docs/imgs/menu.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/menu.jpg" width="576px" syt height="324px" />
 
 
 ### **接口管理**
-<img src="docs/imgs/api.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/api.jpg" width="576px" syt height="324px" />
 
 
 ### **注冊中心**
-<img src="docs/imgs/nacos.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/nacos.jpg" width="576px" syt height="324px" />
 
 
 ### **文件上传**
-<img src="docs/imgs/minio.jpg" width="300px" syt height="300px" />
+<img src="https://oss.gagajiankang.com/cloud/minio.jpg" width="576px" syt height="324px" />
 
-**待续**
+**更多预览图，尽请期待**
 
 ## 联系交流
 
